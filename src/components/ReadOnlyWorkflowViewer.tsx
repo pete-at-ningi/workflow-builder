@@ -112,7 +112,9 @@ export default function ReadOnlyWorkflowViewer({
                         >
                           {stage.name}
                         </h3>
-                        <p className='text-sm text-gray-600'>{stage.description}</p>
+                        <p className='text-sm text-gray-600'>
+                          {stage.description}
+                        </p>
                       </div>
                     </div>
                     <div className='flex items-center gap-2'>

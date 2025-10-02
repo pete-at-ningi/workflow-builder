@@ -242,13 +242,13 @@ export default function Home() {
                 />
               </div>
               <div className='flex gap-3'>
-              <button
-                type='submit'
-                className='bg-purple text-white px-6 py-3 rounded-lg hover:opacity-90 hover:scale-105 transition-all duration-200 font-medium cursor-pointer'
-                style={{ fontFamily: 'var(--font-headers)' }}
-              >
-                Create Workflow
-              </button>
+                <button
+                  type='submit'
+                  className='bg-purple text-white px-6 py-3 rounded-lg hover:opacity-90 hover:scale-105 transition-all duration-200 font-medium cursor-pointer'
+                  style={{ fontFamily: 'var(--font-headers)' }}
+                >
+                  Create Workflow
+                </button>
                 <button
                   type='button'
                   onClick={() => setShowCreateForm(false)}
@@ -292,8 +292,8 @@ export default function Home() {
                 </span>
               </div>
               <p className='text-gray-600 mb-6'>
-                These are example workflows to help you understand how to structure your own. 
-                Click on any workflow to view it in detail.
+                These are example workflows to help you understand how to
+                structure your own. Click on any workflow to view it in detail.
               </p>
               <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-3'>
                 {exampleWorkflows.map((workflow) => (
@@ -318,7 +318,9 @@ export default function Home() {
                     </p>
                     <div className='flex items-center justify-between text-xs text-gray-500'>
                       <span>{workflow.stages.length} stages</span>
-                      <span className='text-purple font-medium'>View Details →</span>
+                      <span className='text-purple font-medium'>
+                        View Details →
+                      </span>
                     </div>
                   </div>
                 ))}
