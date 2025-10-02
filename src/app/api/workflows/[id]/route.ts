@@ -52,6 +52,10 @@ export async function PUT(
       updatedAt: new Date().toISOString(),
     };
 
+    console.log('API: Existing workflow:', existingWorkflow);
+    console.log('API: Request body:', body);
+    console.log('API: Updated workflow:', updatedWorkflow);
+
     await saveWorkflow(updatedWorkflow);
     return NextResponse.json(updatedWorkflow);
   } catch (error) {
