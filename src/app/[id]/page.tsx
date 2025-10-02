@@ -343,7 +343,7 @@ export default function WorkflowEditor() {
           </div>
           <button
             onClick={() => router.push('/')}
-            className='bg-gray-200 text-dark px-4 py-2 rounded-lg hover:bg-gray-300 transition-all font-medium'
+            className='bg-gray-200 text-dark px-4 py-2 rounded-lg hover:bg-gray-300 hover:scale-105 transition-all duration-200 font-medium cursor-pointer'
             style={{ fontFamily: 'var(--font-headers)' }}
           >
             Back to Home
@@ -355,7 +355,7 @@ export default function WorkflowEditor() {
           <div className='flex items-center gap-4'>
             <button
               onClick={exportWorkflow}
-              className='bg-blue text-white px-4 py-2 rounded-lg hover:opacity-90 transition-all font-medium'
+              className='bg-blue text-white px-4 py-2 rounded-lg hover:opacity-90 hover:scale-105 transition-all duration-200 font-medium cursor-pointer'
               style={{ fontFamily: 'var(--font-headers)' }}
             >
               Export
@@ -363,7 +363,7 @@ export default function WorkflowEditor() {
             <button
               onClick={saveWorkflow}
               disabled={status === 'saving'}
-              className='bg-purple text-white px-4 py-2 rounded-lg hover:opacity-90 disabled:opacity-50 transition-all font-medium'
+              className='bg-purple text-white px-4 py-2 rounded-lg hover:opacity-90 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 transition-all duration-200 font-medium cursor-pointer'
               style={{ fontFamily: 'var(--font-headers)' }}
             >
               {status === 'saving' ? 'Saving...' : 'Save'}
@@ -510,14 +510,14 @@ export default function WorkflowEditor() {
               <div className='flex gap-3'>
                 <button
                   onClick={addStage}
-                  className='bg-purple text-white px-6 py-3 rounded-lg hover:opacity-90 transition-all font-medium'
+                  className='bg-purple text-white px-6 py-3 rounded-lg hover:opacity-90 hover:scale-105 transition-all duration-200 font-medium cursor-pointer'
                   style={{ fontFamily: 'var(--font-headers)' }}
                 >
                   Add Stage
                 </button>
                 <button
                   onClick={() => setShowAddStage(false)}
-                  className='bg-gray-200 text-dark px-6 py-3 rounded-lg hover:bg-gray-300 transition-all font-medium'
+                  className='bg-gray-200 text-dark px-6 py-3 rounded-lg hover:bg-gray-300 hover:scale-105 transition-all duration-200 font-medium cursor-pointer'
                   style={{ fontFamily: 'var(--font-headers)' }}
                 >
                   Cancel
@@ -528,7 +528,7 @@ export default function WorkflowEditor() {
         ) : (
           <button
             onClick={() => setShowAddStage(true)}
-            className='w-full mt-6 bg-white border-2 border-dashed border-gray-300 rounded-xl p-8 text-gray-500 hover:border-purple hover:text-purple transition-all font-medium'
+            className='w-full mt-6 bg-white border-2 border-dashed border-gray-300 rounded-xl p-8 text-gray-500 hover:border-purple hover:text-purple hover:scale-105 transition-all duration-200 font-medium cursor-pointer'
             style={{ fontFamily: 'var(--font-headers)' }}
           >
             + Add New Stage

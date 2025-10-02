@@ -89,21 +89,21 @@ export default function StageComponent({
         <div className='flex gap-2 ml-4'>
           <button
             onClick={() => setShowOutcomes(!showOutcomes)}
-            className='bg-blue/10 text-blue px-3 py-1 rounded-lg text-sm hover:bg-blue/20 transition-colors font-medium'
+            className='bg-blue/10 text-blue px-3 py-1 rounded-lg text-sm hover:bg-blue/20 hover:scale-105 transition-all duration-200 font-medium cursor-pointer'
             style={{ fontFamily: 'var(--font-headers)' }}
           >
             {stage.outcomes.length} Outcomes
           </button>
           <button
             onClick={onAddTask}
-            className='bg-purple/10 text-purple px-3 py-1 rounded-lg text-sm hover:bg-purple/20 transition-colors font-medium'
+            className='bg-purple/10 text-purple px-3 py-1 rounded-lg text-sm hover:bg-purple/20 hover:scale-105 transition-all duration-200 font-medium cursor-pointer'
             style={{ fontFamily: 'var(--font-headers)' }}
           >
             + Task
           </button>
           <button
             onClick={onDelete}
-            className='bg-red-100 text-red-600 px-3 py-1 rounded-lg text-sm hover:bg-red-200 transition-colors font-medium'
+            className='bg-red-100 text-red-600 px-3 py-1 rounded-lg text-sm hover:bg-red-200 hover:scale-105 transition-all duration-200 font-medium cursor-pointer'
             style={{ fontFamily: 'var(--font-headers)' }}
           >
             Delete
@@ -130,7 +130,7 @@ export default function StageComponent({
                 {outcome}
                 <button
                   onClick={() => removeOutcome(outcome)}
-                  className='text-purple hover:text-purple/70 ml-1'
+                  className='text-purple hover:text-purple/70 hover:scale-110 transition-all duration-200 ml-1 cursor-pointer'
                 >
                   ×
                 </button>
@@ -148,7 +148,7 @@ export default function StageComponent({
             />
             <button
               onClick={addOutcome}
-              className='bg-purple text-white px-4 py-2 rounded-lg text-sm hover:opacity-90 transition-all font-medium'
+              className='bg-purple text-white px-4 py-2 rounded-lg text-sm hover:opacity-90 hover:scale-105 transition-all duration-200 font-medium cursor-pointer'
               style={{ fontFamily: 'var(--font-headers)' }}
             >
               Add

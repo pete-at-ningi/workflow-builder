@@ -113,7 +113,7 @@ export default function TaskComponent({
           </span>
           <button
             onClick={onDelete}
-            className='text-red-500 hover:text-red-700 text-sm'
+            className='text-red-500 hover:text-red-700 hover:scale-110 transition-all duration-200 text-sm cursor-pointer'
           >
             ×
           </button>

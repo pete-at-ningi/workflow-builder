@@ -122,7 +122,7 @@ export default function Home() {
           </div>
           <div className='flex gap-3'>
             <label
-              className='bg-blue text-white px-6 py-3 rounded-lg hover:opacity-90 transition-all font-medium cursor-pointer'
+              className='bg-blue text-white px-6 py-3 rounded-lg hover:opacity-90 hover:scale-105 transition-all duration-200 font-medium cursor-pointer'
               style={{ fontFamily: 'var(--font-headers)' }}
             >
               {importing ? 'Importing...' : 'Import Workflow'}
@@ -136,7 +136,7 @@ export default function Home() {
             </label>
             <button
               onClick={() => setShowCreateForm(!showCreateForm)}
-              className='bg-purple text-white px-6 py-3 rounded-lg hover:opacity-90 transition-all font-medium'
+              className='bg-purple text-white px-6 py-3 rounded-lg hover:opacity-90 hover:scale-105 transition-all duration-200 font-medium cursor-pointer'
               style={{ fontFamily: 'var(--font-headers)' }}
             >
               {showCreateForm ? 'Cancel' : 'Create New Workflow'}
@@ -217,17 +217,17 @@ export default function Home() {
                 />
               </div>
               <div className='flex gap-3'>
-                <button
-                  type='submit'
-                  className='bg-purple text-white px-6 py-3 rounded-lg hover:opacity-90 transition-all font-medium'
-                  style={{ fontFamily: 'var(--font-headers)' }}
-                >
-                  Create Workflow
-                </button>
+              <button
+                type='submit'
+                className='bg-purple text-white px-6 py-3 rounded-lg hover:opacity-90 hover:scale-105 transition-all duration-200 font-medium cursor-pointer'
+                style={{ fontFamily: 'var(--font-headers)' }}
+              >
+                Create Workflow
+              </button>
                 <button
                   type='button'
                   onClick={() => setShowCreateForm(false)}
-                  className='bg-gray-200 text-dark px-6 py-3 rounded-lg hover:bg-gray-300 transition-all font-medium'
+                  className='bg-gray-200 text-dark px-6 py-3 rounded-lg hover:bg-gray-300 hover:scale-105 transition-all duration-200 font-medium cursor-pointer'
                   style={{ fontFamily: 'var(--font-headers)' }}
                 >
                   Cancel
