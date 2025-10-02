@@ -59,34 +59,16 @@ export default function StageComponent({
         isDragging ? 'opacity-50' : ''
       }`}
     >
-      {/* Stage Header */}
-      <div className='flex items-start justify-between mb-4'>
-        <div className='flex-1'>
-          <div className='flex items-center gap-2 mb-2'>
-            <div
-              {...attributes}
-              {...listeners}
-              className='cursor-grab hover:cursor-grabbing text-gray-400 hover:text-gray-600'
-            >
-              ⋮⋮
-            </div>
-            <input
-              type='text'
-              value={stage.name}
-              onChange={(e) => onUpdate({ name: e.target.value })}
-              className='text-xl font-semibold text-dark bg-transparent border-none outline-none flex-1'
-              style={{ fontFamily: 'var(--font-headers)' }}
-            />
+      {/* Controls Line */}
+      <div className='flex justify-between items-center mb-4'>
+        <div className='flex items-center gap-2'>
+          <div
+            {...attributes}
+            {...listeners}
+            className='cursor-grab hover:cursor-grabbing text-gray-400 hover:text-gray-600'
+          >
+            ⋮⋮
           </div>
-          <textarea
-            value={stage.description}
-            onChange={(e) => onUpdate({ description: e.target.value })}
-            className='text-gray-600 bg-transparent border-none outline-none w-full resize-none'
-            rows={2}
-            placeholder='Stage description...'
-          />
-        </div>
-        <div className='flex gap-2 ml-4'>
           <button
             onClick={() => setShowOutcomes(!showOutcomes)}
             className='bg-blue/10 text-blue px-3 py-1 rounded-lg text-sm hover:bg-blue/20 hover:scale-105 transition-all duration-200 font-medium cursor-pointer'
@@ -101,14 +83,42 @@ export default function StageComponent({
           >
             + Task
           </button>
-          <button
-            onClick={onDelete}
-            className='bg-red-100 text-red-600 px-3 py-1 rounded-lg text-sm hover:bg-red-200 hover:scale-105 transition-all duration-200 font-medium cursor-pointer'
-            style={{ fontFamily: 'var(--font-headers)' }}
-          >
-            Delete
-          </button>
         </div>
+        <button
+          onClick={onDelete}
+          className='bg-red-100 text-red-600 px-3 py-1 rounded-lg text-sm hover:bg-red-200 hover:scale-105 transition-all duration-200 font-medium cursor-pointer'
+          style={{ fontFamily: 'var(--font-headers)' }}
+        >
+          Delete
+        </button>
+      </div>
+
+      {/* Title Input */}
+      <div className='mb-3'>
+        <input
+          type='text'
+          value={stage.name}
+          onChange={(e) => onUpdate({ name: e.target.value })}
+          className='text-xl font-semibold text-dark w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple focus:border-transparent transition-all'
+          style={{ fontFamily: 'var(--font-headers)' }}
+          placeholder='Stage title...'
+        />
+      </div>
+
+      {/* Description Input */}
+      <div className='mb-4'>
+        <textarea
+          value={stage.description}
+          onChange={(e) => {
+            onUpdate({ description: e.target.value });
+            // Auto-resize
+            e.target.style.height = 'auto';
+            e.target.style.height = e.target.scrollHeight + 'px';
+          }}
+          className='text-gray-600 w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple focus:border-transparent transition-all resize-none overflow-hidden'
+          placeholder='Stage description...'
+          rows={2}
+        />
       </div>
 
       {/* Outcomes Section */}

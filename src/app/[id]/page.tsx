@@ -214,7 +214,7 @@ export default function WorkflowEditor() {
       stages: [...workflow.stages, stage],
     };
     console.log('Updated workflow with new stage:', updatedWorkflow);
-    
+
     setWorkflow(updatedWorkflow);
     triggerSave();
 
