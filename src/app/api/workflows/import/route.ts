@@ -6,11 +6,14 @@ import { Workflow } from '@/types/workflow';
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    
+
     // Validate the imported workflow structure
     if (!body.name || !body.description || !body.createdBy) {
       return NextResponse.json(
-        { error: 'Invalid workflow format. Missing required fields: name, description, createdBy' },
+        {
+          error:
+            'Invalid workflow format. Missing required fields: name, description, createdBy',
+        },
         { status: 400 }
       );
     }
@@ -22,15 +25,21 @@ export async function POST(request: NextRequest) {
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
       // Ensure stages have proper IDs and order
-      stages: (body.stages || []).map((stage: any, index: number) => ({
-        ...stage,
-        id: stage.id || crypto.randomUUID(),
-        order: stage.order !== undefined ? stage.order : index,
-        tasks: (stage.tasks || []).map((task: any) => ({
-          ...task,
-          id: task.id || crypto.randomUUID(),
-        })),
-      })),
+      stages: (body.stages || []).map((stage: unknown, index: number) => {
+        const s = stage as Record<string, unknown>;
+        return {
+          ...s,
+          id: s.id || crypto.randomUUID(),
+          order: s.order !== undefined ? s.order : index,
+          tasks: ((s.tasks as unknown[]) || []).map((task: unknown) => {
+            const t = task as Record<string, unknown>;
+            return {
+              ...t,
+              id: t.id || crypto.randomUUID(),
+            };
+          }),
+        };
+      }),
     };
 
     await saveWorkflow(importedWorkflow);
@@ -43,3 +52,4 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+

@@ -48,57 +48,59 @@ export default function StageComponent({
   };
 
   const removeOutcome = (outcome: string) => {
-    onUpdate({ outcomes: stage.outcomes.filter(o => o !== outcome) });
+    onUpdate({ outcomes: stage.outcomes.filter((o) => o !== outcome) });
   };
 
   return (
     <div
       ref={setNodeRef}
       style={style}
-      className={`bg-white rounded-lg shadow-md p-6 ${isDragging ? 'opacity-50' : ''}`}
+      className={`bg-white rounded-lg shadow-md p-6 ${
+        isDragging ? 'opacity-50' : ''
+      }`}
     >
       {/* Stage Header */}
-      <div className="flex items-start justify-between mb-4">
-        <div className="flex-1">
-          <div className="flex items-center gap-2 mb-2">
+      <div className='flex items-start justify-between mb-4'>
+        <div className='flex-1'>
+          <div className='flex items-center gap-2 mb-2'>
             <div
               {...attributes}
               {...listeners}
-              className="cursor-grab hover:cursor-grabbing text-gray-400 hover:text-gray-600"
+              className='cursor-grab hover:cursor-grabbing text-gray-400 hover:text-gray-600'
             >
               ⋮⋮
             </div>
             <input
-              type="text"
+              type='text'
               value={stage.name}
               onChange={(e) => onUpdate({ name: e.target.value })}
-              className="text-xl font-semibold text-gray-900 bg-transparent border-none outline-none flex-1"
+              className='text-xl font-semibold text-gray-900 bg-transparent border-none outline-none flex-1'
             />
           </div>
           <textarea
             value={stage.description}
             onChange={(e) => onUpdate({ description: e.target.value })}
-            className="text-gray-600 bg-transparent border-none outline-none w-full resize-none"
+            className='text-gray-600 bg-transparent border-none outline-none w-full resize-none'
             rows={2}
-            placeholder="Stage description..."
+            placeholder='Stage description...'
           />
         </div>
-        <div className="flex gap-2 ml-4">
+        <div className='flex gap-2 ml-4'>
           <button
             onClick={() => setShowOutcomes(!showOutcomes)}
-            className="bg-blue-100 text-blue-700 px-3 py-1 rounded-md text-sm hover:bg-blue-200 transition-colors"
+            className='bg-blue-100 text-blue-700 px-3 py-1 rounded-md text-sm hover:bg-blue-200 transition-colors'
           >
             {stage.outcomes.length} Outcomes
           </button>
           <button
             onClick={onAddTask}
-            className="bg-green-100 text-green-700 px-3 py-1 rounded-md text-sm hover:bg-green-200 transition-colors"
+            className='bg-green-100 text-green-700 px-3 py-1 rounded-md text-sm hover:bg-green-200 transition-colors'
           >
             + Task
           </button>
           <button
             onClick={onDelete}
-            className="bg-red-100 text-red-700 px-3 py-1 rounded-md text-sm hover:bg-red-200 transition-colors"
+            className='bg-red-100 text-red-700 px-3 py-1 rounded-md text-sm hover:bg-red-200 transition-colors'
           >
             Delete
           </button>
@@ -107,36 +109,38 @@ export default function StageComponent({
 
       {/* Outcomes Section */}
       {showOutcomes && (
-        <div className="mb-4 p-4 bg-gray-50 rounded-md">
-          <h4 className="text-sm font-medium text-gray-700 mb-2">Stage Outcomes</h4>
-          <div className="flex flex-wrap gap-2 mb-3">
+        <div className='mb-4 p-4 bg-gray-50 rounded-md'>
+          <h4 className='text-sm font-medium text-gray-700 mb-2'>
+            Stage Outcomes
+          </h4>
+          <div className='flex flex-wrap gap-2 mb-3'>
             {stage.outcomes.map((outcome) => (
               <span
                 key={outcome}
-                className="bg-blue-100 text-blue-800 px-2 py-1 rounded-md text-sm flex items-center gap-1"
+                className='bg-blue-100 text-blue-800 px-2 py-1 rounded-md text-sm flex items-center gap-1'
               >
                 {outcome}
                 <button
                   onClick={() => removeOutcome(outcome)}
-                  className="text-blue-600 hover:text-blue-800"
+                  className='text-blue-600 hover:text-blue-800'
                 >
                   ×
                 </button>
               </span>
             ))}
           </div>
-          <div className="flex gap-2">
+          <div className='flex gap-2'>
             <input
-              type="text"
+              type='text'
               value={newOutcome}
               onChange={(e) => setNewOutcome(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && addOutcome()}
-              className="flex-1 px-3 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Add new outcome..."
+              className='flex-1 px-3 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500'
+              placeholder='Add new outcome...'
             />
             <button
               onClick={addOutcome}
-              className="bg-blue-600 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-700 transition-colors"
+              className='bg-blue-600 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-700 transition-colors'
             >
               Add
             </button>
@@ -145,10 +149,10 @@ export default function StageComponent({
       )}
 
       {/* Tasks */}
-      <div className="space-y-3">
+      <div className='space-y-3'>
         {stage.tasks.length === 0 ? (
-          <div className="text-center py-8 text-gray-500">
-            <p>No tasks yet. Click "+ Task" to add one.</p>
+          <div className='text-center py-8 text-gray-500'>
+            <p>No tasks yet. Click &quot;+ Task&quot; to add one.</p>
           </div>
         ) : (
           stage.tasks.map((task) => (
@@ -164,3 +168,4 @@ export default function StageComponent({
     </div>
   );
 }
+

@@ -1,4 +1,8 @@
-export type TaskAssignee = 'client' | 'advisor' | 'administrator' | 'power planner';
+export type TaskAssignee =
+  | 'client'
+  | 'advisor'
+  | 'administrator'
+  | 'power planner';
 
 export interface Task {
   id: string;
@@ -34,3 +38,4 @@ export interface WorkflowListItem {
   createdAt: string;
   updatedAt: string;
 }
+

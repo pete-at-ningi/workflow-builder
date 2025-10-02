@@ -5,11 +5,12 @@ import { Workflow } from '@/types/workflow';
 // GET /api/workflows/[id] - Get a specific workflow
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const workflow = await getWorkflowById(params.id);
-    
+    const { id } = await params;
+    const workflow = await getWorkflowById(id);
+
     if (!workflow) {
       return NextResponse.json(
         { error: 'Workflow not found' },
@@ -30,12 +31,13 @@ export async function GET(
 // PUT /api/workflows/[id] - Update a specific workflow
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const body = await request.json();
-    const existingWorkflow = await getWorkflowById(params.id);
-    
+    const existingWorkflow = await getWorkflowById(id);
+
     if (!existingWorkflow) {
       return NextResponse.json(
         { error: 'Workflow not found' },
@@ -46,7 +48,7 @@ export async function PUT(
     const updatedWorkflow: Workflow = {
       ...existingWorkflow,
       ...body,
-      id: params.id, // Ensure ID doesn't change
+      id: id, // Ensure ID doesn't change
       updatedAt: new Date().toISOString(),
     };
 
@@ -64,10 +66,11 @@ export async function PUT(
 // DELETE /api/workflows/[id] - Delete a specific workflow
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const workflow = await getWorkflowById(params.id);
+    const { id } = await params;
+    const workflow = await getWorkflowById(id);
     
     if (!workflow) {
       return NextResponse.json(
@@ -76,7 +79,7 @@ export async function DELETE(
       );
     }
 
-    await deleteWorkflow(params.id);
+    await deleteWorkflow(id);
     return NextResponse.json({ message: 'Workflow deleted successfully' });
   } catch (error) {
     console.error('Error deleting workflow:', error);
@@ -86,3 +89,4 @@ export async function DELETE(
     );
   }
 }
+

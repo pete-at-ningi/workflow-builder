@@ -17,7 +17,11 @@ const assigneeOptions: { value: TaskAssignee; label: string }[] = [
   { value: 'power planner', label: 'Power Planner' },
 ];
 
-export default function TaskComponent({ task, onUpdate, onDelete }: TaskComponentProps) {
+export default function TaskComponent({
+  task,
+  onUpdate,
+  onDelete,
+}: TaskComponentProps) {
   const {
     attributes,
     listeners,
@@ -51,39 +55,43 @@ export default function TaskComponent({ task, onUpdate, onDelete }: TaskComponen
     <div
       ref={setNodeRef}
       style={style}
-      className={`bg-gray-50 rounded-lg p-4 border border-gray-200 ${isDragging ? 'opacity-50' : ''}`}
+      className={`bg-gray-50 rounded-lg p-4 border border-gray-200 ${
+        isDragging ? 'opacity-50' : ''
+      }`}
     >
-      <div className="flex items-start justify-between">
-        <div className="flex-1">
-          <div className="flex items-center gap-2 mb-2">
+      <div className='flex items-start justify-between'>
+        <div className='flex-1'>
+          <div className='flex items-center gap-2 mb-2'>
             <div
               {...attributes}
               {...listeners}
-              className="cursor-grab hover:cursor-grabbing text-gray-400 hover:text-gray-600"
+              className='cursor-grab hover:cursor-grabbing text-gray-400 hover:text-gray-600'
             >
               ⋮⋮
             </div>
             <input
-              type="text"
+              type='text'
               value={task.title}
               onChange={(e) => onUpdate({ title: e.target.value })}
-              className="font-medium text-gray-900 bg-transparent border-none outline-none flex-1"
-              placeholder="Task title..."
+              className='font-medium text-gray-900 bg-transparent border-none outline-none flex-1'
+              placeholder='Task title...'
             />
           </div>
           <textarea
             value={task.description}
             onChange={(e) => onUpdate({ description: e.target.value })}
-            className="text-gray-600 bg-transparent border-none outline-none w-full resize-none text-sm"
+            className='text-gray-600 bg-transparent border-none outline-none w-full resize-none text-sm'
             rows={2}
-            placeholder="Task description..."
+            placeholder='Task description...'
           />
         </div>
-        <div className="flex items-center gap-2 ml-4">
+        <div className='flex items-center gap-2 ml-4'>
           <select
             value={task.assignedTo}
-            onChange={(e) => onUpdate({ assignedTo: e.target.value as TaskAssignee })}
-            className="text-xs px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onChange={(e) =>
+              onUpdate({ assignedTo: e.target.value as TaskAssignee })
+            }
+            className='text-xs px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
           >
             {assigneeOptions.map((option) => (
               <option key={option.value} value={option.value}>
@@ -91,12 +99,19 @@ export default function TaskComponent({ task, onUpdate, onDelete }: TaskComponen
               </option>
             ))}
           </select>
-          <span className={`px-2 py-1 rounded-md text-xs font-medium ${getAssigneeColor(task.assignedTo)}`}>
-            {assigneeOptions.find(opt => opt.value === task.assignedTo)?.label}
+          <span
+            className={`px-2 py-1 rounded-md text-xs font-medium ${getAssigneeColor(
+              task.assignedTo
+            )}`}
+          >
+            {
+              assigneeOptions.find((opt) => opt.value === task.assignedTo)
+                ?.label
+            }
           </span>
           <button
             onClick={onDelete}
-            className="text-red-500 hover:text-red-700 text-sm"
+            className='text-red-500 hover:text-red-700 text-sm'
           >
             ×
           </button>
@@ -105,3 +120,4 @@ export default function TaskComponent({ task, onUpdate, onDelete }: TaskComponen
     </div>
   );
 }
+

@@ -1,69 +1,60 @@
-import { promises as fs } from 'fs';
-import path from 'path';
+import { kv } from '@vercel/kv';
 import { Workflow, WorkflowListItem } from '@/types/workflow';
 
-const DATA_DIR = path.join(process.cwd(), 'data');
-const WORKFLOWS_FILE = path.join(DATA_DIR, 'workflows.json');
+const WORKFLOWS_KEY = 'workflows';
 
-// Ensure data directory exists
-async function ensureDataDir() {
-  try {
-    await fs.access(DATA_DIR);
-  } catch {
-    await fs.mkdir(DATA_DIR, { recursive: true });
-  }
-}
-
-// Read workflows from file
+// Read workflows from KV store
 export async function getWorkflows(): Promise<Workflow[]> {
-  await ensureDataDir();
-  
   try {
-    const data = await fs.readFile(WORKFLOWS_FILE, 'utf8');
-    return JSON.parse(data);
+    const workflows = await kv.get<Workflow[]>(WORKFLOWS_KEY);
+    return workflows || [];
   } catch (error) {
-    // If file doesn't exist or is empty, return empty array
+    console.error('Error fetching workflows from KV:', error);
     return [];
   }
 }
 
-// Write workflows to file
+// Write workflows to KV store
 export async function saveWorkflows(workflows: Workflow[]): Promise<void> {
-  await ensureDataDir();
-  await fs.writeFile(WORKFLOWS_FILE, JSON.stringify(workflows, null, 2));
+  try {
+    await kv.set(WORKFLOWS_KEY, workflows);
+  } catch (error) {
+    console.error('Error saving workflows to KV:', error);
+    throw error;
+  }
 }
 
 // Get workflow by ID
 export async function getWorkflowById(id: string): Promise<Workflow | null> {
   const workflows = await getWorkflows();
-  return workflows.find(workflow => workflow.id === id) || null;
+  return workflows.find((workflow) => workflow.id === id) || null;
 }
 
 // Save a single workflow
 export async function saveWorkflow(workflow: Workflow): Promise<void> {
   const workflows = await getWorkflows();
-  const existingIndex = workflows.findIndex(w => w.id === workflow.id);
-  
+  const existingIndex = workflows.findIndex((w) => w.id === workflow.id);
+
   if (existingIndex >= 0) {
     workflows[existingIndex] = workflow;
   } else {
     workflows.push(workflow);
   }
-  
+
   await saveWorkflows(workflows);
 }
 
 // Delete a workflow
 export async function deleteWorkflow(id: string): Promise<void> {
   const workflows = await getWorkflows();
-  const filteredWorkflows = workflows.filter(workflow => workflow.id !== id);
+  const filteredWorkflows = workflows.filter((workflow) => workflow.id !== id);
   await saveWorkflows(filteredWorkflows);
 }
 
 // Get workflow list items (for home page)
 export async function getWorkflowListItems(): Promise<WorkflowListItem[]> {
   const workflows = await getWorkflows();
-  return workflows.map(workflow => ({
+  return workflows.map((workflow) => ({
     id: workflow.id,
     name: workflow.name,
     description: workflow.description,
@@ -72,3 +63,4 @@ export async function getWorkflowListItems(): Promise<WorkflowListItem[]> {
     updatedAt: workflow.updatedAt,
   }));
 }
+
