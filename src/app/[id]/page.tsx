@@ -34,6 +34,7 @@ export default function WorkflowEditor() {
     description: '',
     outcomes: ['Complete', 'Failed'],
   });
+  const [newOutcome, setNewOutcome] = useState('');
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -211,6 +212,7 @@ export default function WorkflowEditor() {
       description: '',
       outcomes: ['Complete', 'Failed'],
     });
+    setNewOutcome('');
     setShowAddStage(false);
   };
 
@@ -310,6 +312,24 @@ export default function WorkflowEditor() {
       day: 'numeric',
     });
   };
+
+  const addOutcome = () => {
+    if (newOutcome.trim() && !newStage.outcomes.includes(newOutcome.trim())) {
+      setNewStage({
+        ...newStage,
+        outcomes: [...newStage.outcomes, newOutcome.trim()],
+      });
+      setNewOutcome('');
+    }
+  };
+
+  const removeOutcome = (outcome: string) => {
+    setNewStage({
+      ...newStage,
+      outcomes: newStage.outcomes.filter((o) => o !== outcome),
+    });
+  };
+
 
   if (loading) {
     return (
@@ -489,23 +509,48 @@ export default function WorkflowEditor() {
                   className='block text-sm font-medium text-dark mb-2'
                   style={{ fontFamily: 'var(--font-headers)' }}
                 >
-                  Outcomes (comma-separated)
+                  Stage Outcomes
                 </label>
-                <input
-                  type='text'
-                  value={newStage.outcomes.join(', ')}
-                  onChange={(e) =>
-                    setNewStage({
-                      ...newStage,
-                      outcomes: e.target.value
-                        .split(',')
-                        .map((s) => s.trim())
-                        .filter((s) => s),
-                    })
-                  }
-                  className='w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple focus:border-transparent transition-all'
-                  placeholder='Complete, Failed, Client Rejected'
-                />
+                
+                {/* Current Outcomes List */}
+                <div className='space-y-2 mb-3'>
+                  {newStage.outcomes.map((outcome, index) => (
+                    <div
+                      key={index}
+                      className='flex items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-200'
+                    >
+                      <div className='flex items-center gap-1 text-gray-400 cursor-move'>
+                        <span>⋮⋮</span>
+                      </div>
+                      <span className='flex-1 text-sm font-medium text-dark'>{outcome}</span>
+                      <button
+                        onClick={() => removeOutcome(outcome)}
+                        className='text-red-500 hover:text-red-700 hover:scale-110 transition-all duration-200 text-sm cursor-pointer'
+                      >
+                        ×
+                      </button>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Add New Outcome */}
+                <div className='flex gap-2'>
+                  <input
+                    type='text'
+                    value={newOutcome}
+                    onChange={(e) => setNewOutcome(e.target.value)}
+                    onKeyPress={(e) => e.key === 'Enter' && addOutcome()}
+                    className='flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple focus:border-transparent transition-all'
+                    placeholder='Add new outcome...'
+                  />
+                  <button
+                    onClick={addOutcome}
+                    className='bg-purple text-white px-4 py-2 rounded-lg text-sm hover:opacity-90 hover:scale-105 transition-all duration-200 font-medium cursor-pointer'
+                    style={{ fontFamily: 'var(--font-headers)' }}
+                  >
+                    Add
+                  </button>
+                </div>
               </div>
               <div className='flex gap-3'>
                 <button
