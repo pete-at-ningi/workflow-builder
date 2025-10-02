@@ -45,11 +45,14 @@ export default function WorkflowEditor() {
 
   const fetchWorkflow = async (id: string) => {
     try {
+      console.log('Fetching workflow with ID:', id);
       const response = await fetch(`/api/workflows/${id}`);
       if (response.ok) {
         const data = await response.json();
+        console.log('Workflow fetched successfully:', data);
         setWorkflow(data);
       } else {
+        console.error('Failed to fetch workflow:', response.status);
         router.push('/');
       }
     } catch (error) {
@@ -71,6 +74,7 @@ export default function WorkflowEditor() {
     if (!workflow) return;
 
     try {
+      console.log('Saving workflow:', workflow);
       const response = await fetch(`/api/workflows/${workflow.id}`, {
         method: 'PUT',
         headers: {
@@ -81,8 +85,11 @@ export default function WorkflowEditor() {
 
       if (response.ok) {
         const updatedWorkflow = await response.json();
+        console.log('Workflow saved successfully:', updatedWorkflow);
         setWorkflow(updatedWorkflow);
       } else {
+        const errorText = await response.text();
+        console.error('Failed to save workflow:', response.status, errorText);
         throw new Error('Failed to save workflow');
       }
     } catch (error) {
@@ -201,10 +208,14 @@ export default function WorkflowEditor() {
       order: workflow.stages.length,
     };
 
-    setWorkflow({
+    console.log('Adding new stage:', stage);
+    const updatedWorkflow = {
       ...workflow,
       stages: [...workflow.stages, stage],
-    });
+    };
+    console.log('Updated workflow with new stage:', updatedWorkflow);
+    
+    setWorkflow(updatedWorkflow);
     triggerSave();
 
     setNewStage({
@@ -329,7 +340,6 @@ export default function WorkflowEditor() {
       outcomes: newStage.outcomes.filter((o) => o !== outcome),
     });
   };
-
 
   if (loading) {
     return (
@@ -511,7 +521,7 @@ export default function WorkflowEditor() {
                 >
                   Stage Outcomes
                 </label>
-                
+
                 {/* Current Outcomes List */}
                 <div className='space-y-2 mb-3'>
                   {newStage.outcomes.map((outcome, index) => (
@@ -522,7 +532,9 @@ export default function WorkflowEditor() {
                       <div className='flex items-center gap-1 text-gray-400 cursor-move'>
                         <span>⋮⋮</span>
                       </div>
-                      <span className='flex-1 text-sm font-medium text-dark'>{outcome}</span>
+                      <span className='flex-1 text-sm font-medium text-dark'>
+                        {outcome}
+                      </span>
                       <button
                         onClick={() => removeOutcome(outcome)}
                         className='text-red-500 hover:text-red-700 hover:scale-110 transition-all duration-200 text-sm cursor-pointer'
