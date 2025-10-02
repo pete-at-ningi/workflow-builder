@@ -41,7 +41,7 @@ export async function saveWorkflow(workflow: Workflow): Promise<void> {
   console.log('Database: Saving workflow:', workflow);
   const workflows = await getWorkflows();
   console.log('Database: Current workflows:', workflows);
-  
+
   const existingIndex = workflows.findIndex((w) => w.id === workflow.id);
   console.log('Database: Existing index:', existingIndex);
 

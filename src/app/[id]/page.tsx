@@ -199,12 +199,20 @@ export default function WorkflowEditor() {
   const addStage = () => {
     if (!workflow || !newStage.name.trim()) return;
 
+    // Create a default task for the new stage
+    const defaultTask: Task = {
+      id: `task-${crypto.randomUUID()}`,
+      title: 'New Task',
+      description: '',
+      assignedTo: 'client',
+    };
+
     const stage: Stage = {
       id: `stage-${crypto.randomUUID()}`,
       name: newStage.name,
       description: newStage.description,
       outcomes: newStage.outcomes,
-      tasks: [],
+      tasks: [defaultTask],
       order: workflow.stages.length,
     };
 
@@ -214,7 +222,7 @@ export default function WorkflowEditor() {
       stages: [...workflow.stages, stage],
     };
     console.log('Updated workflow with new stage:', updatedWorkflow);
-
+    
     setWorkflow(updatedWorkflow);
     triggerSave();
 
