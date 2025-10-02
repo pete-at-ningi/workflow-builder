@@ -17,6 +17,7 @@ export default function Home() {
   const [importing, setImporting] = useState(false);
   const [exampleWorkflows, setExampleWorkflows] = useState<Workflow[]>([]);
   const [deleting, setDeleting] = useState<string | null>(null);
+  const [showDiagram, setShowDiagram] = useState(false);
 
   useEffect(() => {
     fetchWorkflows();
@@ -125,7 +126,9 @@ export default function Home() {
       }
     } catch (error) {
       console.error('Error importing workflow:', error);
-      alert('Failed to import workflow. Please check the file format.');
+      alert(
+        'Failed to import workflow template. Please check the file format.'
+      );
     } finally {
       setImporting(false);
       // Reset the file input
@@ -142,7 +145,7 @@ export default function Home() {
 
     if (
       !confirm(
-        'Are you sure you want to delete this workflow? This action cannot be undone.'
+        'Are you sure you want to delete this workflow template? This action cannot be undone.'
       )
     ) {
       return;
@@ -161,7 +164,7 @@ export default function Home() {
       }
     } catch (error) {
       console.error('Error deleting workflow:', error);
-      alert('Failed to delete workflow. Please try again.');
+      alert('Failed to delete workflow template. Please try again.');
     } finally {
       setDeleting(null);
     }
@@ -193,7 +196,7 @@ export default function Home() {
               className='bg-blue text-white px-6 py-3 rounded-lg hover:opacity-90 hover:scale-105 transition-all duration-200 font-medium cursor-pointer'
               style={{ fontFamily: 'var(--font-headers)' }}
             >
-              {importing ? 'Importing...' : 'Import Workflow'}
+              {importing ? 'Importing...' : 'Import Workflow Template'}
               <input
                 type='file'
                 accept='.json'
@@ -207,7 +210,7 @@ export default function Home() {
               className='bg-purple text-white px-6 py-3 rounded-lg hover:opacity-90 hover:scale-105 transition-all duration-200 font-medium cursor-pointer'
               style={{ fontFamily: 'var(--font-headers)' }}
             >
-              {showCreateForm ? 'Cancel' : 'Create New Workflow'}
+              {showCreateForm ? 'Cancel' : 'Create New Workflow Template'}
             </button>
           </div>
         </div>
@@ -218,7 +221,7 @@ export default function Home() {
               className='text-xl font-semibold mb-4 text-dark'
               style={{ fontFamily: 'var(--font-headers)' }}
             >
-              Create New Workflow
+              Create New Workflow Template
             </h2>
             <form onSubmit={handleCreateWorkflow} className='space-y-4'>
               <div>
@@ -227,7 +230,7 @@ export default function Home() {
                   className='block text-sm font-medium text-dark mb-2'
                   style={{ fontFamily: 'var(--font-headers)' }}
                 >
-                  Workflow Name
+                  Workflow Template Name
                 </label>
                 <input
                   type='text'
@@ -290,7 +293,7 @@ export default function Home() {
                   className='bg-purple text-white px-6 py-3 rounded-lg hover:opacity-90 hover:scale-105 transition-all duration-200 font-medium cursor-pointer'
                   style={{ fontFamily: 'var(--font-headers)' }}
                 >
-                  Create Workflow
+                  Create Workflow Template
                 </button>
                 <button
                   type='button'
@@ -306,15 +309,180 @@ export default function Home() {
         ) : (
           <div className='bg-white rounded-xl shadow-lg p-6 mb-8 border border-gray-100'>
             <h1
-              className='text-3xl font-bold text-dark'
+              className='text-3xl font-bold text-dark mb-4'
               style={{ fontFamily: 'var(--font-headers)' }}
             >
-              Workflow Builder
+              Workflow Template Builder
             </h1>
-            <p>
-              This is used to create workflows which can be imported into the
-              Ningi Backoffice in order to automate processes.
-            </p>
+
+            {/* Collapsible Description */}
+            <div className='space-y-3 text-gray-700 leading-relaxed'>
+              <div className='flex items-start gap-3'>
+                <div className='flex-1'>
+                  <p>
+                    <strong>What is a Workflow Template?</strong> A workflow
+                    template is a reusable blueprint that defines a sequence of
+                    stages and tasks for completing a specific process. Each
+                    template has a title, description, and is organized into
+                    stages.
+                  </p>
+                </div>
+                <button
+                  onClick={() => setShowDiagram(!showDiagram)}
+                  className='flex-shrink-0 p-2 text-gray-500 hover:text-purple hover:bg-purple/5 rounded-lg transition-all duration-200 cursor-pointer'
+                  title={
+                    showDiagram
+                      ? 'Hide structure diagram'
+                      : 'Show structure diagram'
+                  }
+                >
+                  {showDiagram ? '🔽' : '▶️'}
+                </button>
+              </div>
+
+              {/* Collapsible Visual Diagram */}
+              {showDiagram && (
+                <div className='mt-4 p-6 bg-gradient-to-r from-purple/5 to-blue/5 rounded-lg border border-purple/20'>
+                  <div className='text-sm text-gray-600 mb-4 font-medium'>
+                    Workflow Structure:
+                  </div>
+
+                  {/* Workflow Level */}
+                  <div className='flex justify-center mb-4'>
+                    <div className='text-center'>
+                      <div className='w-24 h-10 bg-purple/20 rounded border border-purple/30 flex items-center justify-center mb-2'>
+                        <span className='text-purple font-medium text-sm'>
+                          Workflow
+                        </span>
+                      </div>
+                      <div className='text-gray-500 text-xs'>
+                        Title & Description
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Arrow down */}
+                  <div className='flex justify-center mb-4'>
+                    <div className='text-gray-400 text-lg'>↓</div>
+                  </div>
+
+                  {/* Stages Level */}
+                  <div className='flex justify-center gap-3 mb-4'>
+                    <div className='text-center'>
+                      <div className='w-20 h-8 bg-blue/20 rounded border border-blue/30 flex items-center justify-center mb-2'>
+                        <span className='text-blue font-medium text-xs'>
+                          Stage 1
+                        </span>
+                      </div>
+                      <div className='text-gray-500 text-xs'>
+                        Name, Description
+                        <br />& Outcomes
+                      </div>
+                    </div>
+                    <div className='text-center'>
+                      <div className='w-20 h-8 bg-blue/20 rounded border border-blue/30 flex items-center justify-center mb-2'>
+                        <span className='text-blue font-medium text-xs'>
+                          Stage 2
+                        </span>
+                      </div>
+                      <div className='text-gray-500 text-xs'>
+                        Name, Description
+                        <br />& Outcomes
+                      </div>
+                    </div>
+                    <div className='text-center'>
+                      <div className='w-20 h-8 bg-blue/20 rounded border border-blue/30 flex items-center justify-center mb-2'>
+                        <span className='text-blue font-medium text-xs'>
+                          Stage N
+                        </span>
+                      </div>
+                      <div className='text-gray-500 text-xs'>
+                        Name, Description
+                        <br />& Outcomes
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Arrows down from stages */}
+                  <div className='flex justify-center gap-3 mb-4'>
+                    <div className='text-gray-400 text-sm'>↓</div>
+                    <div className='text-gray-400 text-sm'>↓</div>
+                    <div className='text-gray-400 text-sm'>↓</div>
+                  </div>
+
+                  {/* Tasks Level */}
+                  <div className='flex justify-center gap-2'>
+                    <div className='text-center'>
+                      <div className='w-16 h-6 bg-green/20 rounded border border-green/30 flex items-center justify-center mb-1'>
+                        <span className='text-green-600 font-medium text-xs'>
+                          Task 1
+                        </span>
+                      </div>
+                      <div className='text-gray-500 text-xs'>
+                        Title, Description
+                        <br />& Assignee
+                      </div>
+                    </div>
+                    <div className='text-center'>
+                      <div className='w-16 h-6 bg-green/20 rounded border border-green/30 flex items-center justify-center mb-1'>
+                        <span className='text-green-600 font-medium text-xs'>
+                          Task 2
+                        </span>
+                      </div>
+                      <div className='text-gray-500 text-xs'>
+                        Title, Description
+                        <br />& Assignee
+                      </div>
+                    </div>
+                    <div className='text-center'>
+                      <div className='w-16 h-6 bg-green/20 rounded border border-green/30 flex items-center justify-center mb-1'>
+                        <span className='text-green-600 font-medium text-xs'>
+                          Task 3
+                        </span>
+                      </div>
+                      <div className='text-gray-500 text-xs'>
+                        Title, Description
+                        <br />& Assignee
+                      </div>
+                    </div>
+                    <div className='text-center'>
+                      <div className='w-16 h-6 bg-green/20 rounded border border-green/30 flex items-center justify-center mb-1'>
+                        <span className='text-green-600 font-medium text-xs'>
+                          Task N
+                        </span>
+                      </div>
+                      <div className='text-gray-500 text-xs'>
+                        Title, Description
+                        <br />& Assignee
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              <p>
+                <strong>Structure:</strong> Each stage has a name, description,
+                and predefined outcomes (like "Complete", "Failed", "Client
+                Rejected"). Within each stage, you can add multiple tasks with
+                titles, descriptions, and assign them to specific people
+                (Client, Adviser, Administrator, or Paraplanner).
+              </p>
+
+              <p>
+                <strong>Purpose:</strong> These templates can be deployed and
+                utilized in the Ningi Backoffice for specific clients. Instead
+                of manually typing out 50 tasks every time you want to do an
+                annual review, you simply select the template and it
+                automatically creates all the tasks, allocating them to the
+                relevant adviser or paraplanner for that client.
+              </p>
+
+              <p className='text-sm text-gray-600 bg-blue/5 p-3 rounded-lg border border-blue/20'>
+                💡 <strong>Think of it as a shortcut:</strong> Create once, use
+                many times. Perfect for standardizing processes and ensuring
+                consistency across all client work.
+              </p>
+            </div>
           </div>
         )}
 
@@ -328,16 +496,16 @@ export default function Home() {
                   className='text-2xl font-bold text-dark'
                   style={{ fontFamily: 'var(--font-headers)' }}
                 >
-                  Example Workflows
+                  Example Workflow Templates
                 </h2>
                 <span className='bg-purple/10 text-purple px-3 py-1 rounded-full text-sm font-medium'>
                   Read Only
                 </span>
               </div>
               <p className='text-gray-600 mb-6'>
-                These are example workflows to help you understand how to
-                structure your own. Click on any workflow to view it in detail,
-                you can also duplicate them to get started.
+                These are example workflow templates to help you understand how
+                to structure your own. Click on any template to view it in
+                detail, you can also duplicate them to get started.
               </p>
               <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-3'>
                 {exampleWorkflows.map((workflow) => {
@@ -400,7 +568,7 @@ export default function Home() {
               className='text-2xl font-bold text-dark'
               style={{ fontFamily: 'var(--font-headers)' }}
             >
-              Your Workflows
+              Your Workflow Templates
             </h2>
           </div>
         </div>
@@ -411,10 +579,10 @@ export default function Home() {
               className='text-gray-500 text-lg mb-4'
               style={{ fontFamily: 'var(--font-headers)' }}
             >
-              No workflows yet
+              No workflow templates yet
             </div>
             <p className='text-gray-400'>
-              Create your first workflow to get started!
+              Create your first workflow template to get started!
             </p>
           </div>
         ) : (
@@ -452,7 +620,7 @@ export default function Home() {
                       disabled={deleting === workflow.id}
                       className='bg-red-100 text-red-600 p-2 rounded-lg hover:bg-red-200 hover:scale-105 transition-all duration-200 text-sm font-medium cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100'
                       style={{ fontFamily: 'var(--font-headers)' }}
-                      title='Delete workflow'
+                      title='Delete workflow template'
                     >
                       {deleting === workflow.id ? '...' : '🗑️'}
                     </button>

@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Ningi | Workflow Builder',
-  description: 'Create and manage workflows with stages and tasks',
+  title: 'Ningi | Workflow Template Builder',
+  description: 'Create and manage workflow templates with stages and tasks',
   icons: {
     icon: '/favicon.ico',
   },

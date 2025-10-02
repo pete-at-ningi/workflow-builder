@@ -12,9 +12,9 @@ interface TaskComponentProps {
 
 const assigneeOptions: { value: TaskAssignee; label: string }[] = [
   { value: 'client', label: 'Client' },
-  { value: 'advisor', label: 'Advisor' },
+  { value: 'adviser', label: 'Adviser' },
   { value: 'administrator', label: 'Administrator' },
-  { value: 'power planner', label: 'Power Planner' },
+  { value: 'paraplanner', label: 'Paraplanner' },
 ];
 
 export default function TaskComponent({
@@ -40,11 +40,11 @@ export default function TaskComponent({
     switch (assignee) {
       case 'client':
         return 'bg-blue/10 text-blue';
-      case 'advisor':
+      case 'adviser':
         return 'bg-green-100 text-green-800';
       case 'administrator':
         return 'bg-purple/10 text-purple';
-      case 'power planner':
+      case 'paraplanner':
         return 'bg-orange-100 text-orange-800';
       default:
         return 'bg-gray-100 text-gray-800';

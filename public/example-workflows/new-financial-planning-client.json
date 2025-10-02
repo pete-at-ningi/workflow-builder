@@ -21,7 +21,7 @@
           "id": "task-lead-1",
           "title": "Send Introductory Email",
           "description": "Send manifesto, explainer documents, and Calendly booking link",
-          "assignedTo": "advisor"
+          "assignedTo": "adviser"
         },
         {
           "id": "task-lead-2",
@@ -33,7 +33,7 @@
           "id": "task-lead-3",
           "title": "Meeting #1: Intro Call (60-90mins)",
           "description": "Initial meeting covering objectives, risk, experience, and compliance",
-          "assignedTo": "advisor"
+          "assignedTo": "adviser"
         },
         {
           "id": "task-lead-4",
@@ -88,7 +88,7 @@
           "id": "task-onboard-5",
           "title": "Complete AssetMap and FinCalc",
           "description": "Tidy up AssetMap and populate FinCalc with 2-way integration",
-          "assignedTo": "power planner"
+          "assignedTo": "paraplanner"
         }
       ],
       "order": 1
@@ -107,37 +107,37 @@
           "id": "task-research-1",
           "title": "Create Initial Analysis Report",
           "description": "Prepare report with Asset Map, cash flow, and draft proposal",
-          "assignedTo": "advisor"
+          "assignedTo": "adviser"
         },
         {
           "id": "task-research-2",
           "title": "Create Loom Video",
           "description": "Record short video explaining the proposal",
-          "assignedTo": "advisor"
+          "assignedTo": "adviser"
         },
         {
           "id": "task-research-3",
           "title": "Research Existing Plans",
           "description": "Analyze current position against priorities and objectives",
-          "assignedTo": "power planner"
+          "assignedTo": "paraplanner"
         },
         {
           "id": "task-research-4",
           "title": "Protection Research",
           "description": "Use research tool to identify appropriate protection solutions",
-          "assignedTo": "power planner"
+          "assignedTo": "paraplanner"
         },
         {
           "id": "task-research-5",
           "title": "Pension & Investment Research",
           "description": "Generate illustrations, KFDs, and fund research",
-          "assignedTo": "power planner"
+          "assignedTo": "paraplanner"
         },
         {
           "id": "task-research-6",
           "title": "Create Suitability Report",
           "description": "Comprehensive report covering all recommendations",
-          "assignedTo": "power planner"
+          "assignedTo": "paraplanner"
         }
       ],
       "order": 2
@@ -157,13 +157,13 @@
           "id": "task-present-1",
           "title": "Meeting #2: Discuss Analysis (60mins)",
           "description": "Run through Initial Analysis Report and agree proposed plan",
-          "assignedTo": "advisor"
+          "assignedTo": "adviser"
         },
         {
           "id": "task-present-2",
           "title": "Send Suitability Report",
           "description": "Send formal report within one week of second meeting",
-          "assignedTo": "advisor"
+          "assignedTo": "adviser"
         },
         {
           "id": "task-present-3",
@@ -175,7 +175,7 @@
           "id": "task-present-4",
           "title": "Respond to Client Questions",
           "description": "Address any follow-up questions from the client",
-          "assignedTo": "advisor"
+          "assignedTo": "adviser"
         }
       ],
       "order": 3

@@ -73,11 +73,11 @@ export default function ExampleWorkflowViewer() {
     switch (assignee) {
       case 'client':
         return 'bg-blue/10 text-blue';
-      case 'advisor':
+      case 'adviser':
         return 'bg-purple/10 text-purple';
       case 'administrator':
         return 'bg-green-100 text-green-700';
-      case 'power planner':
+      case 'paraplanner':
         return 'bg-orange-100 text-orange-700';
       default:
         return 'bg-gray-100 text-gray-700';
@@ -171,7 +171,7 @@ export default function ExampleWorkflowViewer() {
                     {workflow.name}
                   </h1>
                   <span className='bg-purple/10 text-purple px-3 py-1 rounded-full text-sm font-medium'>
-                    Example Workflow
+                    Example Workflow Template
                   </span>
                 </div>
                 <p className='text-gray-600 mb-2'>{workflow.description}</p>

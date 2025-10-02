@@ -26,37 +26,37 @@
           "id": "task-prepare-2",
           "title": "Arrange Review Meeting",
           "description": "Contact client to schedule annual review meeting",
-          "assignedTo": "advisor"
+          "assignedTo": "adviser"
         },
         {
           "id": "task-prepare-3",
           "title": "Meeting Preparation",
           "description": "Complete preparation tasks in reasonable time before meeting",
-          "assignedTo": "power planner"
+          "assignedTo": "paraplanner"
         },
         {
           "id": "task-prepare-4",
           "title": "Create Plan Summary",
           "description": "Summary of all plans under management with valuations and performance",
-          "assignedTo": "power planner"
+          "assignedTo": "paraplanner"
         },
         {
           "id": "task-prepare-5",
           "title": "Gather Performance Information",
           "description": "Collect performance data for all client investments",
-          "assignedTo": "power planner"
+          "assignedTo": "paraplanner"
         },
         {
           "id": "task-prepare-6",
           "title": "Update Cashflow Model",
           "description": "Refresh cashflow projections and show progress towards objectives",
-          "assignedTo": "power planner"
+          "assignedTo": "paraplanner"
         },
         {
           "id": "task-prepare-7",
           "title": "Share Preparation Pack",
           "description": "Share review pack with adviser ahead of meeting",
-          "assignedTo": "power planner"
+          "assignedTo": "paraplanner"
         }
       ],
       "order": 0
@@ -76,43 +76,43 @@
           "id": "task-meeting-1",
           "title": "Discuss Cash Position",
           "description": "Review any updates on client's cash position",
-          "assignedTo": "advisor"
+          "assignedTo": "adviser"
         },
         {
           "id": "task-meeting-2",
           "title": "Review Circumstance Changes",
           "description": "Discuss any changes in client's circumstances",
-          "assignedTo": "advisor"
+          "assignedTo": "adviser"
         },
         {
           "id": "task-meeting-3",
           "title": "Review Plans Under Management",
           "description": "Discuss performance and status of all managed plans",
-          "assignedTo": "advisor"
+          "assignedTo": "adviser"
         },
         {
           "id": "task-meeting-4",
           "title": "Review Attitude to Risk",
           "description": "Reassess client's attitude to risk and capacity for loss",
-          "assignedTo": "advisor"
+          "assignedTo": "adviser"
         },
         {
           "id": "task-meeting-5",
           "title": "Review Cashflow Modelling",
           "description": "Discuss updated cashflow projections and progress",
-          "assignedTo": "advisor"
+          "assignedTo": "adviser"
         },
         {
           "id": "task-meeting-6",
           "title": "Track Progress Against Goals",
           "description": "Review progress towards financial objectives",
-          "assignedTo": "advisor"
+          "assignedTo": "adviser"
         },
         {
           "id": "task-meeting-7",
           "title": "Record Meeting Actions",
           "description": "Document any actions or decisions from the meeting",
-          "assignedTo": "advisor"
+          "assignedTo": "adviser"
         }
       ],
       "order": 1
@@ -131,37 +131,37 @@
           "id": "task-analysis-1",
           "title": "Review Meeting Notes",
           "description": "Analyze meeting notes and identify required actions",
-          "assignedTo": "power planner"
+          "assignedTo": "paraplanner"
         },
         {
           "id": "task-analysis-2",
           "title": "Create Review Report",
           "description": "Report covering each existing plan and recommendations",
-          "assignedTo": "power planner"
+          "assignedTo": "paraplanner"
         },
         {
           "id": "task-analysis-3",
           "title": "Protection Review",
           "description": "Review protection needs and identify appropriate solutions",
-          "assignedTo": "power planner"
+          "assignedTo": "paraplanner"
         },
         {
           "id": "task-analysis-4",
           "title": "Pension & Investment Review",
           "description": "Review pensions and investments, generate illustrations where needed",
-          "assignedTo": "power planner"
+          "assignedTo": "paraplanner"
         },
         {
           "id": "task-analysis-5",
           "title": "Send Report for Review",
           "description": "Send report to adviser for review and approval",
-          "assignedTo": "power planner"
+          "assignedTo": "paraplanner"
         },
         {
           "id": "task-analysis-6",
           "title": "Case Checking",
           "description": "Send case for checking where needed and complete remedial work",
-          "assignedTo": "power planner"
+          "assignedTo": "paraplanner"
         }
       ],
       "order": 2
@@ -181,37 +181,37 @@
           "id": "task-present-rec-1",
           "title": "Arrange Recommendation Meeting",
           "description": "Schedule meeting to discuss any recommendations",
-          "assignedTo": "advisor"
+          "assignedTo": "adviser"
         },
         {
           "id": "task-present-rec-2",
           "title": "Discuss Suitability Report",
           "description": "Present recommendations and ensure client understanding",
-          "assignedTo": "advisor"
+          "assignedTo": "adviser"
         },
         {
           "id": "task-present-rec-3",
           "title": "Allow Client Time to Digest",
           "description": "Give client time to consider recommendations after the call",
-          "assignedTo": "advisor"
+          "assignedTo": "adviser"
         },
         {
           "id": "task-present-rec-4",
           "title": "Respond to Follow-up Questions",
           "description": "Address any questions the client may have",
-          "assignedTo": "advisor"
+          "assignedTo": "adviser"
         },
         {
           "id": "task-present-rec-5",
           "title": "Confirm Client Decision",
           "description": "Follow up to confirm if client wants to proceed",
-          "assignedTo": "advisor"
+          "assignedTo": "adviser"
         },
         {
           "id": "task-present-rec-6",
           "title": "Request Signed Suitability Report",
           "description": "Obtain client signature on final suitability report",
-          "assignedTo": "advisor"
+          "assignedTo": "adviser"
         }
       ],
       "order": 3
@@ -242,7 +242,7 @@
           "id": "task-implement-changes-3",
           "title": "Record Existing Plan Analysis",
           "description": "Document analysis of existing plans and recommendations",
-          "assignedTo": "power planner"
+          "assignedTo": "paraplanner"
         },
         {
           "id": "task-implement-changes-4",
@@ -260,7 +260,7 @@
           "id": "task-implement-changes-6",
           "title": "Provide Client Update",
           "description": "Give client comprehensive update of all changes",
-          "assignedTo": "advisor"
+          "assignedTo": "adviser"
         },
         {
           "id": "task-implement-changes-7",

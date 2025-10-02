@@ -59,7 +59,7 @@
           "id": "task-prepare-loa-3",
           "title": "Review LOA Content",
           "description": "Ensure LOA contains all necessary information and permissions",
-          "assignedTo": "advisor"
+          "assignedTo": "adviser"
         },
         {
           "id": "task-prepare-loa-4",
