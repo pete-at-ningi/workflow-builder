@@ -62,7 +62,9 @@ export default function Home() {
     });
   };
 
-  const handleImportWorkflow = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImportWorkflow = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const file = event.target.files?.[0];
     if (!file) return;
 
@@ -70,7 +72,7 @@ export default function Home() {
     try {
       const text = await file.text();
       const importedWorkflow = JSON.parse(text);
-      
+
       const response = await fetch('/api/workflows/import', {
         method: 'POST',
         headers: {
@@ -125,7 +127,10 @@ export default function Home() {
             </h1>
           </div>
           <div className='flex gap-3'>
-            <label className='bg-blue text-white px-6 py-3 rounded-lg hover:opacity-90 transition-all font-medium cursor-pointer' style={{ fontFamily: 'var(--font-headers)' }}>
+            <label
+              className='bg-blue text-white px-6 py-3 rounded-lg hover:opacity-90 transition-all font-medium cursor-pointer'
+              style={{ fontFamily: 'var(--font-headers)' }}
+            >
               {importing ? 'Importing...' : 'Import Workflow'}
               <input
                 type='file'

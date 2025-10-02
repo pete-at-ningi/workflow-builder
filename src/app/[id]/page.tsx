@@ -21,6 +21,7 @@ import { Workflow, Stage, Task } from '@/types/workflow';
 import StageComponent from '@/components/StageComponent';
 import AutosaveIndicator from '@/components/AutosaveIndicator';
 import { useAutosave } from '@/hooks/useAutosave';
+import Image from 'next/image';
 
 export default function WorkflowEditor() {
   const params = useParams();
@@ -302,7 +303,6 @@ export default function WorkflowEditor() {
     }
   };
 
-
   if (loading) {
     return (
       <div className='min-h-screen flex items-center justify-center'>
@@ -322,6 +322,23 @@ export default function WorkflowEditor() {
   return (
     <div className='min-h-screen bg-background'>
       <div className='max-w-7xl mx-auto px-4 py-8'>
+        {/* Logo */}
+        <div className='flex items-center gap-4 mb-6'>
+          <Image
+            src='/logodark.png'
+            alt='Ningi'
+            width={48}
+            height={48}
+            className='h-12 w-auto'
+          />
+          <h1
+            className='text-2xl font-bold text-dark'
+            style={{ fontFamily: 'var(--font-headers)' }}
+          >
+            Workflow Editor
+          </h1>
+        </div>
+
         {/* Header */}
         <div className='bg-white rounded-xl shadow-lg p-6 mb-8 border border-gray-100'>
           <div className='flex justify-between items-start mb-4'>
@@ -333,16 +350,21 @@ export default function WorkflowEditor() {
                   setWorkflow({ ...workflow, name: e.target.value });
                   triggerSave();
                 }}
-                className='text-2xl font-bold text-dark bg-transparent border-none outline-none w-full'
+                className='text-2xl font-bold text-dark w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple focus:border-transparent transition-all'
                 style={{ fontFamily: 'var(--font-headers)' }}
+                placeholder='Workflow title...'
               />
               <textarea
                 value={workflow.description}
                 onChange={(e) => {
                   setWorkflow({ ...workflow, description: e.target.value });
                   triggerSave();
+                  // Auto-resize
+                  e.target.style.height = 'auto';
+                  e.target.style.height = e.target.scrollHeight + 'px';
                 }}
-                className='text-gray-600 bg-transparent border-none outline-none w-full mt-2 resize-none'
+                className='text-gray-600 w-full mt-3 px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple focus:border-transparent transition-all resize-none overflow-hidden'
+                placeholder='Workflow description...'
                 rows={2}
               />
             </div>
