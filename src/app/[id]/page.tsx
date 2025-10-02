@@ -84,9 +84,30 @@ export default function WorkflowEditor() {
       });
 
       if (response.ok) {
-        const updatedWorkflow = await response.json();
-        console.log('Workflow saved successfully:', updatedWorkflow);
-        setWorkflow(updatedWorkflow);
+        const server = await response.json();
+        console.log('Workflow saved successfully:', server);
+
+        // Never allow a stale server payload to delete local stages
+        setWorkflow((current) => {
+          if (!current) return server;
+
+          const serverHasStages =
+            Array.isArray(server.stages) && server.stages.length > 0;
+          const clientHasStages =
+            Array.isArray(current.stages) && current.stages.length > 0;
+
+          // Prefer client stages if client already has them (optimistic add/reorder)
+          const mergedStages =
+            clientHasStages && (!serverHasStages || server.stages.length < current.stages.length)
+              ? current.stages
+              : server.stages ?? current.stages;
+
+          return {
+            ...current,
+            ...server,
+            stages: mergedStages,
+          };
+        });
       } else {
         const errorText = await response.text();
         console.error('Failed to save workflow:', response.status, errorText);
@@ -199,22 +220,26 @@ export default function WorkflowEditor() {
   const addStage = () => {
     if (!workflow || !newStage.name.trim()) return;
 
-    // Create a default task for the new stage
-    const defaultTask: Task = {
-      id: `task-${crypto.randomUUID()}`,
-      title: 'New Task',
-      description: '',
-      assignedTo: 'client',
-    };
-
+    // Create stage first to get the stage ID
     const stage: Stage = {
       id: `stage-${crypto.randomUUID()}`,
       name: newStage.name,
       description: newStage.description,
       outcomes: newStage.outcomes,
-      tasks: [defaultTask],
+      tasks: [],
       order: workflow.stages.length,
     };
+
+    // Create a default task for the new stage with stage ID in the task ID
+    const defaultTask: Task = {
+      id: `task-${stage.id}-${crypto.randomUUID()}`,
+      title: 'New Task',
+      description: '',
+      assignedTo: 'client',
+    };
+
+    // Add the default task to the stage
+    stage.tasks = [defaultTask];
 
     console.log('Adding new stage:', stage);
     const updatedWorkflow = {
