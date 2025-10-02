@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { WorkflowListItem } from '@/types/workflow';
+import { WorkflowListItem, Workflow } from '@/types/workflow';
+import ReadOnlyWorkflowViewer from '@/components/ReadOnlyWorkflowViewer';
 
 export default function Home() {
   const [workflows, setWorkflows] = useState<WorkflowListItem[]>([]);
@@ -15,10 +16,34 @@ export default function Home() {
     createdBy: '',
   });
   const [importing, setImporting] = useState(false);
+  const [exampleWorkflows, setExampleWorkflows] = useState<Workflow[]>([]);
+  const [selectedExample, setSelectedExample] = useState<Workflow | null>(null);
 
   useEffect(() => {
     fetchWorkflows();
+    fetchExampleWorkflows();
   }, []);
+
+  const fetchExampleWorkflows = async () => {
+    try {
+      const workflows = [
+        '/data/example-workflows/new-financial-planning-client.json',
+        '/data/example-workflows/annual-review.json',
+        '/data/example-workflows/letter-of-authority.json',
+      ];
+
+      const exampleData = await Promise.all(
+        workflows.map(async (path) => {
+          const response = await fetch(path);
+          return response.json();
+        })
+      );
+
+      setExampleWorkflows(exampleData);
+    } catch (error) {
+      console.error('Error fetching example workflows:', error);
+    }
+  };
 
   const fetchWorkflows = async () => {
     try {
@@ -250,6 +275,71 @@ export default function Home() {
           </div>
         )}
 
+        {/* Example Workflows Section */}
+        {exampleWorkflows.length > 0 && (
+          <div className='mb-12'>
+            <div className='bg-gradient-to-r from-purple/5 to-blue/5 rounded-xl p-6 border border-purple/20'>
+              <div className='flex items-center gap-3 mb-6'>
+                <div className='w-1 h-8 bg-gradient-to-b from-purple to-blue rounded-full'></div>
+                <h2
+                  className='text-2xl font-bold text-dark'
+                  style={{ fontFamily: 'var(--font-headers)' }}
+                >
+                  Example Workflows
+                </h2>
+                <span className='bg-purple/10 text-purple px-3 py-1 rounded-full text-sm font-medium'>
+                  Read Only
+                </span>
+              </div>
+              <p className='text-gray-600 mb-6'>
+                These are example workflows to help you understand how to structure your own. 
+                Click on any workflow to view it in detail.
+              </p>
+              <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-3'>
+                {exampleWorkflows.map((workflow) => (
+                  <div
+                    key={workflow.id}
+                    onClick={() => setSelectedExample(workflow)}
+                    className='bg-white rounded-lg p-4 border border-gray-200 hover:border-purple/30 hover:shadow-md transition-all cursor-pointer group'
+                  >
+                    <div className='flex items-start justify-between mb-3'>
+                      <h3
+                        className='text-lg font-semibold text-dark group-hover:text-purple transition-colors'
+                        style={{ fontFamily: 'var(--font-headers)' }}
+                      >
+                        {workflow.name}
+                      </h3>
+                      <span className='bg-blue/10 text-blue px-2 py-1 rounded text-xs font-medium'>
+                        Example
+                      </span>
+                    </div>
+                    <p className='text-sm text-gray-600 mb-3 line-clamp-2'>
+                      {workflow.description}
+                    </p>
+                    <div className='flex items-center justify-between text-xs text-gray-500'>
+                      <span>{workflow.stages.length} stages</span>
+                      <span className='text-purple font-medium'>View Details →</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Your Workflows Section */}
+        <div className='mb-8'>
+          <div className='flex items-center gap-3 mb-6'>
+            <div className='w-1 h-8 bg-gradient-to-b from-blue to-purple rounded-full'></div>
+            <h2
+              className='text-2xl font-bold text-dark'
+              style={{ fontFamily: 'var(--font-headers)' }}
+            >
+              Your Workflows
+            </h2>
+          </div>
+        </div>
+
         {workflows.length === 0 ? (
           <div className='text-center py-16'>
             <div
@@ -290,6 +380,14 @@ export default function Home() {
               </Link>
             ))}
           </div>
+        )}
+
+        {/* Read-Only Workflow Viewer Modal */}
+        {selectedExample && (
+          <ReadOnlyWorkflowViewer
+            workflow={selectedExample}
+            onClose={() => setSelectedExample(null)}
+          />
         )}
       </div>
     </div>
