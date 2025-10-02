@@ -495,4 +495,3 @@ export default function WorkflowEditor() {
     </div>
   );
 }
-

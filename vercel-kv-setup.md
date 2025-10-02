@@ -4,16 +4,19 @@
 
 1. Go to your Vercel project dashboard
 2. Navigate to the "Storage" tab
-3. Click "Create Database" and select "KV"
-4. Choose a name for your database (e.g., "workflow-builder-kv")
-5. Select a region close to your users
-6. Click "Create"
+3. Click "Browse Storage" or "Create New"
+4. Select "Upstash" from the Marketplace Database Providers
+5. Choose "Serverless DB (Redis, Vector, Queue, Search)"
+6. Choose a name for your database (e.g., "workflow-builder-kv")
+7. Select a region close to your users
+8. Click "Create"
 
 ## 2. Environment Variables
 
 Vercel will automatically add these environment variables to your project:
+
 - `KV_REST_API_URL`
-- `KV_REST_API_TOKEN` 
+- `KV_REST_API_TOKEN`
 - `KV_REST_API_READ_ONLY_TOKEN`
 
 ## 3. Local Development

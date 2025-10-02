@@ -71,7 +71,7 @@ export async function DELETE(
   try {
     const { id } = await params;
     const workflow = await getWorkflowById(id);
-    
+
     if (!workflow) {
       return NextResponse.json(
         { error: 'Workflow not found' },
@@ -89,4 +89,3 @@ export async function DELETE(
     );
   }
 }
-

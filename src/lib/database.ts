@@ -1,25 +1,28 @@
-import { kv } from '@vercel/kv';
+import { Redis } from '@upstash/redis';
 import { Workflow, WorkflowListItem } from '@/types/workflow';
+
+// Initialize Redis
+const redis = Redis.fromEnv();
 
 const WORKFLOWS_KEY = 'workflows';
 
-// Read workflows from KV store
+// Read workflows from Redis
 export async function getWorkflows(): Promise<Workflow[]> {
   try {
-    const workflows = await kv.get<Workflow[]>(WORKFLOWS_KEY);
+    const workflows = await redis.get<Workflow[]>(WORKFLOWS_KEY);
     return workflows || [];
   } catch (error) {
-    console.error('Error fetching workflows from KV:', error);
+    console.error('Error fetching workflows from Redis:', error);
     return [];
   }
 }
 
-// Write workflows to KV store
+// Write workflows to Redis
 export async function saveWorkflows(workflows: Workflow[]): Promise<void> {
   try {
-    await kv.set(WORKFLOWS_KEY, workflows);
+    await redis.set(WORKFLOWS_KEY, workflows);
   } catch (error) {
-    console.error('Error saving workflows to KV:', error);
+    console.error('Error saving workflows to Redis:', error);
     throw error;
   }
 }
@@ -63,4 +66,3 @@ export async function getWorkflowListItems(): Promise<WorkflowListItem[]> {
     updatedAt: workflow.updatedAt,
   }));
 }
-
