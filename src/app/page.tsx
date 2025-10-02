@@ -115,8 +115,8 @@ export default function Home() {
             <Image
               src='/logodark.png'
               alt='Ningi'
-              width={48}
-              height={48}
+              width={453}
+              height={132}
               className='h-12 w-auto'
             />
             <h1
