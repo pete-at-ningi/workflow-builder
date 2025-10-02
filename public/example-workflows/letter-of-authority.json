@@ -1,0 +1,243 @@
+{
+  "id": "example-loa",
+  "name": "Letter of Authority Process",
+  "description": "Process for obtaining information about an existing client policy through a Letter of Authority (LOA).",
+  "createdBy": "Ningi Team",
+  "createdAt": "2025-01-02T00:00:00.000Z",
+  "updatedAt": "2025-01-02T00:00:00.000Z",
+  "stages": [
+    {
+      "id": "stage-initiate",
+      "name": "Initiate LOA Process",
+      "description": "Start the Letter of Authority process for an existing policy",
+      "outcomes": ["LOA initiated", "Policy not suitable", "Client declined"],
+      "tasks": [
+        {
+          "id": "task-initiate-1",
+          "title": "Receive Policy Details",
+          "description": "Client provides existing policy information and account numbers",
+          "assignedTo": "client"
+        },
+        {
+          "id": "task-initiate-2",
+          "title": "Verify Policy Information",
+          "description": "Confirm policy details and provider information",
+          "assignedTo": "administrator"
+        },
+        {
+          "id": "task-initiate-3",
+          "title": "Research Provider Contact Details",
+          "description": "Find correct contact information for the policy provider",
+          "assignedTo": "administrator"
+        }
+      ],
+      "order": 0
+    },
+    {
+      "id": "stage-prepare-loa",
+      "name": "Prepare LOA",
+      "description": "Create and prepare the Letter of Authority for client signature",
+      "outcomes": [
+        "LOA prepared",
+        "Additional information required",
+        "LOA not applicable"
+      ],
+      "tasks": [
+        {
+          "id": "task-prepare-loa-1",
+          "title": "Create LOA Document",
+          "description": "Generate Letter of Authority with appropriate scope and permissions",
+          "assignedTo": "administrator"
+        },
+        {
+          "id": "task-prepare-loa-2",
+          "title": "Add Required Information",
+          "description": "Include policy details, client information, and requested data",
+          "assignedTo": "administrator"
+        },
+        {
+          "id": "task-prepare-loa-3",
+          "title": "Review LOA Content",
+          "description": "Ensure LOA contains all necessary information and permissions",
+          "assignedTo": "advisor"
+        },
+        {
+          "id": "task-prepare-loa-4",
+          "title": "Send LOA to Client",
+          "description": "Send LOA document to client for signature",
+          "assignedTo": "administrator"
+        }
+      ],
+      "order": 1
+    },
+    {
+      "id": "stage-client-signature",
+      "name": "Client Signature",
+      "description": "Obtain client signature on the Letter of Authority",
+      "outcomes": [
+        "LOA signed",
+        "Client declined",
+        "Signature pending",
+        "LOA returned unsigned"
+      ],
+      "tasks": [
+        {
+          "id": "task-client-sig-1",
+          "title": "Client Reviews LOA",
+          "description": "Client reviews Letter of Authority content and scope",
+          "assignedTo": "client"
+        },
+        {
+          "id": "task-client-sig-2",
+          "title": "Client Signs LOA",
+          "description": "Client signs and returns the Letter of Authority",
+          "assignedTo": "client"
+        },
+        {
+          "id": "task-client-sig-3",
+          "title": "Store Signed LOA",
+          "description": "Save signed LOA document to client file",
+          "assignedTo": "administrator"
+        },
+        {
+          "id": "task-client-sig-4",
+          "title": "Chase for Signature",
+          "description": "Follow up with client if LOA not returned in reasonable time",
+          "assignedTo": "administrator"
+        }
+      ],
+      "order": 2
+    },
+    {
+      "id": "stage-submit-loa",
+      "name": "Submit to Provider",
+      "description": "Submit the signed LOA to the policy provider",
+      "outcomes": [
+        "LOA submitted",
+        "Provider rejected",
+        "Submission failed",
+        "Provider acknowledged"
+      ],
+      "tasks": [
+        {
+          "id": "task-submit-1",
+          "title": "Send LOA to Provider",
+          "description": "Submit signed LOA to appropriate provider contact",
+          "assignedTo": "administrator"
+        },
+        {
+          "id": "task-submit-2",
+          "title": "Confirm Receipt",
+          "description": "Contact provider to ensure LOA has been received",
+          "assignedTo": "administrator"
+        },
+        {
+          "id": "task-submit-3",
+          "title": "Request Timescale",
+          "description": "Ask provider for expected response time",
+          "assignedTo": "administrator"
+        },
+        {
+          "id": "task-submit-4",
+          "title": "Resend if Required",
+          "description": "Resend LOA if provider advises it wasn't received",
+          "assignedTo": "administrator"
+        }
+      ],
+      "order": 3
+    },
+    {
+      "id": "stage-follow-up",
+      "name": "Follow-up & Information Gathering",
+      "description": "Follow up with provider and gather requested policy information",
+      "outcomes": [
+        "Information received",
+        "Partial information",
+        "Provider unresponsive",
+        "Information incomplete"
+      ],
+      "tasks": [
+        {
+          "id": "task-follow-1",
+          "title": "Monitor Response Time",
+          "description": "Track expected response time and follow up if overdue",
+          "assignedTo": "administrator"
+        },
+        {
+          "id": "task-follow-2",
+          "title": "Chase Provider",
+          "description": "Contact provider for updates on LOA processing",
+          "assignedTo": "administrator"
+        },
+        {
+          "id": "task-follow-3",
+          "title": "Receive Policy Information",
+          "description": "Collect policy details and documentation from provider",
+          "assignedTo": "administrator"
+        },
+        {
+          "id": "task-follow-4",
+          "title": "Store Policy Documents",
+          "description": "Save all received policy information to client file",
+          "assignedTo": "administrator"
+        },
+        {
+          "id": "task-follow-5",
+          "title": "Check for Omissions",
+          "description": "Review received information for any missing details",
+          "assignedTo": "administrator"
+        },
+        {
+          "id": "task-follow-6",
+          "title": "Request Missing Information",
+          "description": "Contact provider for any missing policy details",
+          "assignedTo": "administrator"
+        }
+      ],
+      "order": 4
+    },
+    {
+      "id": "stage-complete",
+      "name": "Complete Process",
+      "description": "Finalize the LOA process and update client records",
+      "outcomes": [
+        "Process complete",
+        "Additional LOAs required",
+        "Process closed"
+      ],
+      "tasks": [
+        {
+          "id": "task-complete-1",
+          "title": "Update Client Records",
+          "description": "Update client records with complete policy details",
+          "assignedTo": "administrator"
+        },
+        {
+          "id": "task-complete-2",
+          "title": "Record Service Status",
+          "description": "Document service status and ongoing fees for the policy",
+          "assignedTo": "administrator"
+        },
+        {
+          "id": "task-complete-3",
+          "title": "Notify Client",
+          "description": "Inform client that policy information has been received",
+          "assignedTo": "administrator"
+        },
+        {
+          "id": "task-complete-4",
+          "title": "Pass to Relevant Party",
+          "description": "Forward complete information to paraplanner or adviser as needed",
+          "assignedTo": "administrator"
+        },
+        {
+          "id": "task-complete-5",
+          "title": "Close LOA Process",
+          "description": "Mark LOA process as complete and file all documentation",
+          "assignedTo": "administrator"
+        }
+      ],
+      "order": 5
+    }
+  ]
+}

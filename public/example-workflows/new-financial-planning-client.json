@@ -1,0 +1,258 @@
+{
+  "id": "example-new-client",
+  "name": "New Financial Planning Client (UK)",
+  "description": "Complete process for taking on a new financial planning client from initial enquiry through to implementation and first review.",
+  "createdBy": "Ningi Team",
+  "createdAt": "2025-01-02T00:00:00.000Z",
+  "updatedAt": "2025-01-02T00:00:00.000Z",
+  "stages": [
+    {
+      "id": "stage-lead",
+      "name": "Lead Management",
+      "description": "Initial contact and qualification of potential new clients",
+      "outcomes": [
+        "Agreed to proceed",
+        "Did not want to proceed",
+        "Not suitable",
+        "Deferred"
+      ],
+      "tasks": [
+        {
+          "id": "task-lead-1",
+          "title": "Send Introductory Email",
+          "description": "Send manifesto, explainer documents, and Calendly booking link",
+          "assignedTo": "advisor"
+        },
+        {
+          "id": "task-lead-2",
+          "title": "Create Client Record in Ningi",
+          "description": "Add client prospect to Ningi and set up fact find",
+          "assignedTo": "administrator"
+        },
+        {
+          "id": "task-lead-3",
+          "title": "Meeting #1: Intro Call (60-90mins)",
+          "description": "Initial meeting covering objectives, risk, experience, and compliance",
+          "assignedTo": "advisor"
+        },
+        {
+          "id": "task-lead-4",
+          "title": "Send Follow-up Email",
+          "description": "Send risk questionnaire and existing policies form",
+          "assignedTo": "administrator"
+        },
+        {
+          "id": "task-lead-5",
+          "title": "Set up WhatsApp Group",
+          "description": "Create group with client, planner, and admin support",
+          "assignedTo": "administrator"
+        }
+      ],
+      "order": 0
+    },
+    {
+      "id": "stage-onboard",
+      "name": "Client Onboarding",
+      "description": "Complete client onboarding process including fact find and policy information gathering",
+      "outcomes": [
+        "Client onboarded",
+        "Information incomplete",
+        "Client withdrew"
+      ],
+      "tasks": [
+        {
+          "id": "task-onboard-1",
+          "title": "Send Letters of Authority",
+          "description": "Send LOAs for existing policies via Timeline App or Ningi",
+          "assignedTo": "administrator"
+        },
+        {
+          "id": "task-onboard-2",
+          "title": "Add Policies to iO",
+          "description": "Add existing policies to iO under 'plans'",
+          "assignedTo": "administrator"
+        },
+        {
+          "id": "task-onboard-3",
+          "title": "Process Information Packs",
+          "description": "Confirm receipt via WhatsApp and add plan details to iO",
+          "assignedTo": "administrator"
+        },
+        {
+          "id": "task-onboard-4",
+          "title": "Liaise with Providers",
+          "description": "Contact providers to fill in any missing policy information",
+          "assignedTo": "administrator"
+        },
+        {
+          "id": "task-onboard-5",
+          "title": "Complete AssetMap and FinCalc",
+          "description": "Tidy up AssetMap and populate FinCalc with 2-way integration",
+          "assignedTo": "power planner"
+        }
+      ],
+      "order": 1
+    },
+    {
+      "id": "stage-research",
+      "name": "Research & Analysis",
+      "description": "Comprehensive analysis of client's current position and research of suitable solutions",
+      "outcomes": [
+        "Analysis complete",
+        "Additional information required",
+        "Client objectives unclear"
+      ],
+      "tasks": [
+        {
+          "id": "task-research-1",
+          "title": "Create Initial Analysis Report",
+          "description": "Prepare report with Asset Map, cash flow, and draft proposal",
+          "assignedTo": "advisor"
+        },
+        {
+          "id": "task-research-2",
+          "title": "Create Loom Video",
+          "description": "Record short video explaining the proposal",
+          "assignedTo": "advisor"
+        },
+        {
+          "id": "task-research-3",
+          "title": "Research Existing Plans",
+          "description": "Analyze current position against priorities and objectives",
+          "assignedTo": "power planner"
+        },
+        {
+          "id": "task-research-4",
+          "title": "Protection Research",
+          "description": "Use research tool to identify appropriate protection solutions",
+          "assignedTo": "power planner"
+        },
+        {
+          "id": "task-research-5",
+          "title": "Pension & Investment Research",
+          "description": "Generate illustrations, KFDs, and fund research",
+          "assignedTo": "power planner"
+        },
+        {
+          "id": "task-research-6",
+          "title": "Create Suitability Report",
+          "description": "Comprehensive report covering all recommendations",
+          "assignedTo": "power planner"
+        }
+      ],
+      "order": 2
+    },
+    {
+      "id": "stage-present",
+      "name": "Present Advice",
+      "description": "Present recommendations to client and obtain agreement to proceed",
+      "outcomes": [
+        "Client agreed to proceed",
+        "Client declined",
+        "Client requested changes",
+        "Deferred decision"
+      ],
+      "tasks": [
+        {
+          "id": "task-present-1",
+          "title": "Meeting #2: Discuss Analysis (60mins)",
+          "description": "Run through Initial Analysis Report and agree proposed plan",
+          "assignedTo": "advisor"
+        },
+        {
+          "id": "task-present-2",
+          "title": "Send Suitability Report",
+          "description": "Send formal report within one week of second meeting",
+          "assignedTo": "advisor"
+        },
+        {
+          "id": "task-present-3",
+          "title": "Save Documents to Intelliflo",
+          "description": "Upload all applicable documents and complete online fact-find",
+          "assignedTo": "administrator"
+        },
+        {
+          "id": "task-present-4",
+          "title": "Respond to Client Questions",
+          "description": "Address any follow-up questions from the client",
+          "assignedTo": "advisor"
+        }
+      ],
+      "order": 3
+    },
+    {
+      "id": "stage-implement",
+      "name": "Implementation",
+      "description": "Execute the agreed recommendations and set up new plans",
+      "outcomes": [
+        "Implementation complete",
+        "Partial implementation",
+        "Implementation failed"
+      ],
+      "tasks": [
+        {
+          "id": "task-implement-1",
+          "title": "Send Implementation Forms",
+          "description": "Send client agreement, fee agreement, privacy notice, and transfer forms",
+          "assignedTo": "administrator"
+        },
+        {
+          "id": "task-implement-2",
+          "title": "Set up New Plans",
+          "description": "Create new plans electronically with Fundment",
+          "assignedTo": "administrator"
+        },
+        {
+          "id": "task-implement-3",
+          "title": "Update Intelliflo",
+          "description": "Add new plan details, fees, and change status to 'submitted'",
+          "assignedTo": "administrator"
+        },
+        {
+          "id": "task-implement-4",
+          "title": "Keep Client Updated",
+          "description": "Provide updates via WhatsApp or email throughout process",
+          "assignedTo": "administrator"
+        },
+        {
+          "id": "task-implement-5",
+          "title": "Portal Access Setup",
+          "description": "Ensure client can log into new portal",
+          "assignedTo": "administrator"
+        }
+      ],
+      "order": 4
+    },
+    {
+      "id": "stage-review",
+      "name": "First Review Setup",
+      "description": "Set up ongoing client relationship and schedule first annual review",
+      "outcomes": [
+        "Review scheduled",
+        "Client not ready",
+        "Ongoing client established"
+      ],
+      "tasks": [
+        {
+          "id": "task-review-1",
+          "title": "Create Annual Review Opportunity",
+          "description": "Set up first Annual Planning Meeting in 12 months in Intelliflo",
+          "assignedTo": "administrator"
+        },
+        {
+          "id": "task-review-2",
+          "title": "Add to Client Email List",
+          "description": "Add client details to Google Sheet with review dates",
+          "assignedTo": "administrator"
+        },
+        {
+          "id": "task-review-3",
+          "title": "Set up Automated Follow-up",
+          "description": "Configure AC to send satisfaction email after 2 months",
+          "assignedTo": "administrator"
+        }
+      ],
+      "order": 5
+    }
+  ]
+}

@@ -27,9 +27,9 @@ export default function Home() {
   const fetchExampleWorkflows = async () => {
     try {
       const workflows = [
-        '/data/example-workflows/new-financial-planning-client.json',
-        '/data/example-workflows/annual-review.json',
-        '/data/example-workflows/letter-of-authority.json',
+        '/example-workflows/new-financial-planning-client.json',
+        '/example-workflows/annual-review.json',
+        '/example-workflows/letter-of-authority.json',
       ];
 
       const exampleData = await Promise.all(
