@@ -119,12 +119,6 @@ export default function Home() {
               height={132}
               className='h-12 w-auto'
             />
-            <h1
-              className='text-3xl font-bold text-dark'
-              style={{ fontFamily: 'var(--font-headers)' }}
-            >
-              Workflow Builder
-            </h1>
           </div>
           <div className='flex gap-3'>
             <label
@@ -150,7 +144,7 @@ export default function Home() {
           </div>
         </div>
 
-        {showCreateForm && (
+        {showCreateForm ? (
           <div className='bg-white rounded-xl shadow-lg p-6 mb-8 border border-gray-100'>
             <h2
               className='text-xl font-semibold mb-4 text-dark'
@@ -240,6 +234,19 @@ export default function Home() {
                 </button>
               </div>
             </form>
+          </div>
+        ) : (
+          <div className='bg-white rounded-xl shadow-lg p-6 mb-8 border border-gray-100'>
+            <h1
+              className='text-3xl font-bold text-dark'
+              style={{ fontFamily: 'var(--font-headers)' }}
+            >
+              Workflow Builder
+            </h1>
+            <p>
+              This is used to create workflows which can be imported into the
+              Ningi Backoffice in order to automate processes.
+            </p>
           </div>
         )}
 

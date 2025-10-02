@@ -340,12 +340,6 @@ export default function WorkflowEditor() {
               height={132}
               className='h-12 w-auto'
             />
-            <h1
-              className='text-2xl font-bold text-dark'
-              style={{ fontFamily: 'var(--font-headers)' }}
-            >
-              Workflow Editor
-            </h1>
           </div>
           <button
             onClick={() => router.push('/')}
@@ -381,7 +375,8 @@ export default function WorkflowEditor() {
         {/* Workflow Details Card */}
         <div className='bg-white rounded-xl shadow-lg p-6 mb-8 border border-gray-100'>
           {/* Created/Updated Info */}
-          <div className='text-sm text-gray-500 mb-4 space-y-1'>
+          <div className='flex gap-4 text-sm text-gray-500 mb-4'>
+            <div>Created By: {workflow.createdBy}</div>
             <div>Created: {formatDate(workflow.createdAt)}</div>
             <div>Updated: {formatDate(workflow.updatedAt)}</div>
           </div>
