@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { WorkflowListItem } from '@/types/workflow';
 
 export default function Home() {
@@ -69,28 +70,33 @@ export default function Home() {
   }
 
   return (
-    <div className='min-h-screen bg-gray-50'>
+    <div className='min-h-screen bg-background'>
       <div className='max-w-6xl mx-auto px-4 py-8'>
         <div className='flex justify-between items-center mb-8'>
-          <h1 className='text-3xl font-bold text-gray-900'>
-            Ningi Workflow Builder
-          </h1>
+          <div className='flex items-center gap-4'>
+            <Image src='/logodark.png' alt='Ningi' width={48} height={48} className='h-12 w-auto' />
+            <h1 className='text-3xl font-bold text-dark' style={{ fontFamily: 'var(--font-headers)' }}>
+              Workflow Builder
+            </h1>
+          </div>
           <button
             onClick={() => setShowCreateForm(!showCreateForm)}
-            className='bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors'
+            className='bg-purple text-white px-6 py-3 rounded-lg hover:opacity-90 transition-all font-medium'
+            style={{ fontFamily: 'var(--font-headers)' }}
           >
             {showCreateForm ? 'Cancel' : 'Create New Workflow'}
           </button>
         </div>
 
         {showCreateForm && (
-          <div className='bg-white rounded-lg shadow-md p-6 mb-8'>
-            <h2 className='text-xl font-semibold mb-4'>Create New Workflow</h2>
+          <div className='bg-white rounded-xl shadow-lg p-6 mb-8 border border-gray-100'>
+            <h2 className='text-xl font-semibold mb-4 text-dark' style={{ fontFamily: 'var(--font-headers)' }}>Create New Workflow</h2>
             <form onSubmit={handleCreateWorkflow} className='space-y-4'>
               <div>
                 <label
                   htmlFor='name'
-                  className='block text-sm font-medium text-gray-700 mb-1'
+                  className='block text-sm font-medium text-dark mb-2'
+                  style={{ fontFamily: 'var(--font-headers)' }}
                 >
                   Workflow Name
                 </label>
@@ -101,14 +107,15 @@ export default function Home() {
                   onChange={(e) =>
                     setNewWorkflow({ ...newWorkflow, name: e.target.value })
                   }
-                  className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+                  className='w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple focus:border-transparent transition-all'
                   required
                 />
               </div>
               <div>
                 <label
                   htmlFor='description'
-                  className='block text-sm font-medium text-gray-700 mb-1'
+                  className='block text-sm font-medium text-dark mb-2'
+                  style={{ fontFamily: 'var(--font-headers)' }}
                 >
                   Description
                 </label>
@@ -121,7 +128,7 @@ export default function Home() {
                       description: e.target.value,
                     })
                   }
-                  className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+                  className='w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple focus:border-transparent transition-all resize-none'
                   rows={3}
                   required
                 />
@@ -129,7 +136,8 @@ export default function Home() {
               <div>
                 <label
                   htmlFor='createdBy'
-                  className='block text-sm font-medium text-gray-700 mb-1'
+                  className='block text-sm font-medium text-dark mb-2'
+                  style={{ fontFamily: 'var(--font-headers)' }}
                 >
                   Created By
                 </label>
@@ -143,21 +151,23 @@ export default function Home() {
                       createdBy: e.target.value,
                     })
                   }
-                  className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+                  className='w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple focus:border-transparent transition-all'
                   required
                 />
               </div>
-              <div className='flex gap-2'>
+              <div className='flex gap-3'>
                 <button
                   type='submit'
-                  className='bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors'
+                  className='bg-purple text-white px-6 py-3 rounded-lg hover:opacity-90 transition-all font-medium'
+                  style={{ fontFamily: 'var(--font-headers)' }}
                 >
                   Create Workflow
                 </button>
                 <button
                   type='button'
                   onClick={() => setShowCreateForm(false)}
-                  className='bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400 transition-colors'
+                  className='bg-gray-200 text-dark px-6 py-3 rounded-lg hover:bg-gray-300 transition-all font-medium'
+                  style={{ fontFamily: 'var(--font-headers)' }}
                 >
                   Cancel
                 </button>
@@ -167,8 +177,8 @@ export default function Home() {
         )}
 
         {workflows.length === 0 ? (
-          <div className='text-center py-12'>
-            <div className='text-gray-500 text-lg mb-4'>No workflows yet</div>
+          <div className='text-center py-16'>
+            <div className='text-gray-500 text-lg mb-4' style={{ fontFamily: 'var(--font-headers)' }}>No workflows yet</div>
             <p className='text-gray-400'>
               Create your first workflow to get started!
             </p>
@@ -179,16 +189,16 @@ export default function Home() {
               <Link
                 key={workflow.id}
                 href={`/${workflow.id}`}
-                className='bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow cursor-pointer'
+                className='bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all cursor-pointer border border-gray-100 hover:border-purple/20 group'
               >
-                <h3 className='text-xl font-semibold text-gray-900 mb-2'>
+                <h3 className='text-xl font-semibold text-dark mb-3 group-hover:text-purple transition-colors' style={{ fontFamily: 'var(--font-headers)' }}>
                   {workflow.name}
                 </h3>
-                <p className='text-gray-600 mb-4 line-clamp-3'>
+                <p className='text-gray-600 mb-4 line-clamp-3 leading-relaxed'>
                   {workflow.description}
                 </p>
-                <div className='text-sm text-gray-500 space-y-1'>
-                  <div>Created by: {workflow.createdBy}</div>
+                <div className='text-sm text-gray-500 space-y-1 pt-2 border-t border-gray-100'>
+                  <div>Created by: <span className='font-medium'>{workflow.createdBy}</span></div>
                   <div>Created: {formatDate(workflow.createdAt)}</div>
                   <div>Updated: {formatDate(workflow.updatedAt)}</div>
                 </div>

@@ -55,7 +55,7 @@ export default function StageComponent({
     <div
       ref={setNodeRef}
       style={style}
-      className={`bg-white rounded-lg shadow-md p-6 ${
+      className={`bg-white rounded-xl shadow-lg p-6 border border-gray-100 ${
         isDragging ? 'opacity-50' : ''
       }`}
     >
@@ -70,12 +70,13 @@ export default function StageComponent({
             >
               ⋮⋮
             </div>
-            <input
-              type='text'
-              value={stage.name}
-              onChange={(e) => onUpdate({ name: e.target.value })}
-              className='text-xl font-semibold text-gray-900 bg-transparent border-none outline-none flex-1'
-            />
+              <input
+                type='text'
+                value={stage.name}
+                onChange={(e) => onUpdate({ name: e.target.value })}
+                className='text-xl font-semibold text-dark bg-transparent border-none outline-none flex-1'
+                style={{ fontFamily: 'var(--font-headers)' }}
+              />
           </div>
           <textarea
             value={stage.description}
@@ -88,19 +89,22 @@ export default function StageComponent({
         <div className='flex gap-2 ml-4'>
           <button
             onClick={() => setShowOutcomes(!showOutcomes)}
-            className='bg-blue-100 text-blue-700 px-3 py-1 rounded-md text-sm hover:bg-blue-200 transition-colors'
+            className='bg-blue/10 text-blue px-3 py-1 rounded-lg text-sm hover:bg-blue/20 transition-colors font-medium'
+            style={{ fontFamily: 'var(--font-headers)' }}
           >
             {stage.outcomes.length} Outcomes
           </button>
           <button
             onClick={onAddTask}
-            className='bg-green-100 text-green-700 px-3 py-1 rounded-md text-sm hover:bg-green-200 transition-colors'
+            className='bg-purple/10 text-purple px-3 py-1 rounded-lg text-sm hover:bg-purple/20 transition-colors font-medium'
+            style={{ fontFamily: 'var(--font-headers)' }}
           >
             + Task
           </button>
           <button
             onClick={onDelete}
-            className='bg-red-100 text-red-700 px-3 py-1 rounded-md text-sm hover:bg-red-200 transition-colors'
+            className='bg-red-100 text-red-600 px-3 py-1 rounded-lg text-sm hover:bg-red-200 transition-colors font-medium'
+            style={{ fontFamily: 'var(--font-headers)' }}
           >
             Delete
           </button>
@@ -109,20 +113,21 @@ export default function StageComponent({
 
       {/* Outcomes Section */}
       {showOutcomes && (
-        <div className='mb-4 p-4 bg-gray-50 rounded-md'>
-          <h4 className='text-sm font-medium text-gray-700 mb-2'>
+        <div className='mb-4 p-4 bg-gray-50 rounded-lg'>
+          <h4 className='text-sm font-medium text-dark mb-2' style={{ fontFamily: 'var(--font-headers)' }}>
             Stage Outcomes
           </h4>
           <div className='flex flex-wrap gap-2 mb-3'>
             {stage.outcomes.map((outcome) => (
               <span
                 key={outcome}
-                className='bg-blue-100 text-blue-800 px-2 py-1 rounded-md text-sm flex items-center gap-1'
+                className='bg-purple/10 text-purple px-3 py-1 rounded-lg text-sm flex items-center gap-1 font-medium'
+                style={{ fontFamily: 'var(--font-headers)' }}
               >
                 {outcome}
                 <button
                   onClick={() => removeOutcome(outcome)}
-                  className='text-blue-600 hover:text-blue-800'
+                  className='text-purple hover:text-purple/70 ml-1'
                 >
                   ×
                 </button>
@@ -135,12 +140,13 @@ export default function StageComponent({
               value={newOutcome}
               onChange={(e) => setNewOutcome(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && addOutcome()}
-              className='flex-1 px-3 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500'
+              className='flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple focus:border-transparent transition-all'
               placeholder='Add new outcome...'
             />
             <button
               onClick={addOutcome}
-              className='bg-blue-600 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-700 transition-colors'
+              className='bg-purple text-white px-4 py-2 rounded-lg text-sm hover:opacity-90 transition-all font-medium'
+              style={{ fontFamily: 'var(--font-headers)' }}
             >
               Add
             </button>

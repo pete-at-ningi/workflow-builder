@@ -327,10 +327,10 @@ export default function WorkflowEditor() {
   }
 
   return (
-    <div className='min-h-screen bg-gray-50'>
+    <div className='min-h-screen bg-background'>
       <div className='max-w-7xl mx-auto px-4 py-8'>
         {/* Header */}
-        <div className='bg-white rounded-lg shadow-md p-6 mb-8'>
+        <div className='bg-white rounded-xl shadow-lg p-6 mb-8 border border-gray-100'>
           <div className='flex justify-between items-start mb-4'>
             <div className='flex-1'>
               <input
@@ -339,7 +339,8 @@ export default function WorkflowEditor() {
                 onChange={(e) =>
                   setWorkflow({ ...workflow, name: e.target.value })
                 }
-                className='text-2xl font-bold text-gray-900 bg-transparent border-none outline-none w-full'
+                className='text-2xl font-bold text-dark bg-transparent border-none outline-none w-full'
+                style={{ fontFamily: 'var(--font-headers)' }}
               />
               <textarea
                 value={workflow.description}
@@ -350,21 +351,23 @@ export default function WorkflowEditor() {
                 rows={2}
               />
             </div>
-            <div className='flex gap-2 ml-4'>
+            <div className='flex gap-3 ml-4'>
               <button
                 onClick={saveWorkflow}
                 disabled={saving}
-                className='bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors'
+                className='bg-purple text-white px-4 py-2 rounded-lg hover:opacity-90 disabled:opacity-50 transition-all font-medium'
+                style={{ fontFamily: 'var(--font-headers)' }}
               >
                 {saving ? 'Saving...' : 'Save'}
               </button>
               <button
                 onClick={exportWorkflow}
-                className='bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors'
+                className='bg-blue text-white px-4 py-2 rounded-lg hover:opacity-90 transition-all font-medium'
+                style={{ fontFamily: 'var(--font-headers)' }}
               >
                 Export
               </button>
-              <label className='bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors cursor-pointer'>
+              <label className='bg-gray-200 text-dark px-4 py-2 rounded-lg hover:bg-gray-300 transition-all cursor-pointer font-medium' style={{ fontFamily: 'var(--font-headers)' }}>
                 Import
                 <input
                   type='file'
@@ -375,7 +378,8 @@ export default function WorkflowEditor() {
               </label>
               <button
                 onClick={() => router.push('/')}
-                className='bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors'
+                className='bg-gray-200 text-dark px-4 py-2 rounded-lg hover:bg-gray-300 transition-all font-medium'
+                style={{ fontFamily: 'var(--font-headers)' }}
               >
                 Back to Home
               </button>
@@ -416,11 +420,11 @@ export default function WorkflowEditor() {
 
         {/* Add Stage Button */}
         {showAddStage ? (
-          <div className='bg-white rounded-lg shadow-md p-6 mt-6'>
-            <h3 className='text-lg font-semibold mb-4'>Add New Stage</h3>
+          <div className='bg-white rounded-xl shadow-lg p-6 mt-6 border border-gray-100'>
+            <h3 className='text-lg font-semibold mb-4 text-dark' style={{ fontFamily: 'var(--font-headers)' }}>Add New Stage</h3>
             <div className='space-y-4'>
               <div>
-                <label className='block text-sm font-medium text-gray-700 mb-1'>
+                <label className='block text-sm font-medium text-dark mb-2' style={{ fontFamily: 'var(--font-headers)' }}>
                   Stage Name
                 </label>
                 <input
@@ -429,12 +433,12 @@ export default function WorkflowEditor() {
                   onChange={(e) =>
                     setNewStage({ ...newStage, name: e.target.value })
                   }
-                  className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+                  className='w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple focus:border-transparent transition-all'
                   placeholder='Enter stage name'
                 />
               </div>
               <div>
-                <label className='block text-sm font-medium text-gray-700 mb-1'>
+                <label className='block text-sm font-medium text-dark mb-2' style={{ fontFamily: 'var(--font-headers)' }}>
                   Description
                 </label>
                 <textarea
@@ -442,13 +446,13 @@ export default function WorkflowEditor() {
                   onChange={(e) =>
                     setNewStage({ ...newStage, description: e.target.value })
                   }
-                  className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+                  className='w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple focus:border-transparent transition-all resize-none'
                   rows={3}
                   placeholder='Enter stage description'
                 />
               </div>
               <div>
-                <label className='block text-sm font-medium text-gray-700 mb-1'>
+                <label className='block text-sm font-medium text-dark mb-2' style={{ fontFamily: 'var(--font-headers)' }}>
                   Outcomes (comma-separated)
                 </label>
                 <input
@@ -463,20 +467,22 @@ export default function WorkflowEditor() {
                         .filter((s) => s),
                     })
                   }
-                  className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+                  className='w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple focus:border-transparent transition-all'
                   placeholder='Complete, Failed, Client Rejected'
                 />
               </div>
-              <div className='flex gap-2'>
+              <div className='flex gap-3'>
                 <button
                   onClick={addStage}
-                  className='bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors'
+                  className='bg-purple text-white px-6 py-3 rounded-lg hover:opacity-90 transition-all font-medium'
+                  style={{ fontFamily: 'var(--font-headers)' }}
                 >
                   Add Stage
                 </button>
                 <button
                   onClick={() => setShowAddStage(false)}
-                  className='bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400 transition-colors'
+                  className='bg-gray-200 text-dark px-6 py-3 rounded-lg hover:bg-gray-300 transition-all font-medium'
+                  style={{ fontFamily: 'var(--font-headers)' }}
                 >
                   Cancel
                 </button>
@@ -486,7 +492,8 @@ export default function WorkflowEditor() {
         ) : (
           <button
             onClick={() => setShowAddStage(true)}
-            className='w-full mt-6 bg-white border-2 border-dashed border-gray-300 rounded-lg p-8 text-gray-500 hover:border-gray-400 hover:text-gray-600 transition-colors'
+            className='w-full mt-6 bg-white border-2 border-dashed border-gray-300 rounded-xl p-8 text-gray-500 hover:border-purple hover:text-purple transition-all font-medium'
+            style={{ fontFamily: 'var(--font-headers)' }}
           >
             + Add New Stage
           </button>
