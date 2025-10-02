@@ -112,7 +112,7 @@ export default function WorkflowEditor() {
       } else {
         const errorText = await response.text();
         console.error('Failed to save workflow:', response.status, errorText);
-        throw new Error('Failed to save workflow');
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
     } catch (error) {
       console.error('Error saving workflow:', error);
@@ -344,6 +344,8 @@ export default function WorkflowEditor() {
         a.click();
         window.URL.revokeObjectURL(url);
         document.body.removeChild(a);
+      } else {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
     } catch (error) {
       console.error('Error exporting workflow:', error);

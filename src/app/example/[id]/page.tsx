@@ -40,6 +40,7 @@ export default function ExampleWorkflowViewer() {
         const data = await response.json();
         setWorkflow(data);
       } else {
+        console.error('Failed to fetch example workflow:', response.status);
         router.push('/');
       }
     } catch (error) {
@@ -85,7 +86,7 @@ export default function ExampleWorkflowViewer() {
 
   const handleDuplicateWorkflow = async () => {
     if (!workflow) return;
-    
+
     setDuplicating(true);
     try {
       // Create a duplicate with new ID and updated metadata
