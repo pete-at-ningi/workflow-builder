@@ -290,9 +290,7 @@ export default function WorkflowEditor() {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `${workflow.name
-          .replace(/[^a-z0-9]/gi, '_')
-          .toLowerCase()}.json`;
+        a.download = `${workflow.name.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.json`;
         document.body.appendChild(a);
         a.click();
         window.URL.revokeObjectURL(url);
@@ -301,6 +299,14 @@ export default function WorkflowEditor() {
     } catch (error) {
       console.error('Error exporting workflow:', error);
     }
+  };
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    });
   };
 
   if (loading) {
@@ -322,82 +328,92 @@ export default function WorkflowEditor() {
   return (
     <div className='min-h-screen bg-background'>
       <div className='max-w-7xl mx-auto px-4 py-8'>
-        {/* Logo */}
-        <div className='flex items-center gap-4 mb-6'>
-          <Image
-            src='/logodark.png'
-            alt='Ningi'
-            width={48}
-            height={48}
-            className='h-12 w-auto'
-          />
-          <h1
-            className='text-2xl font-bold text-dark'
+        {/* Top Header - Logo and Back to Home */}
+        <div className='flex justify-between items-center mb-6'>
+          <div className='flex items-center gap-4'>
+            <Image
+              src='/logodark.png'
+              alt='Ningi'
+              width={48}
+              height={48}
+              className='h-12 w-auto'
+            />
+            <h1
+              className='text-2xl font-bold text-dark'
+              style={{ fontFamily: 'var(--font-headers)' }}
+            >
+              Workflow Editor
+            </h1>
+          </div>
+          <button
+            onClick={() => router.push('/')}
+            className='bg-gray-200 text-dark px-4 py-2 rounded-lg hover:bg-gray-300 transition-all font-medium'
             style={{ fontFamily: 'var(--font-headers)' }}
           >
-            Workflow Editor
-          </h1>
+            Back to Home
+          </button>
         </div>
 
-        {/* Header */}
-        <div className='bg-white rounded-xl shadow-lg p-6 mb-8 border border-gray-100'>
-          <div className='flex justify-between items-start mb-4'>
-            <div className='flex-1'>
-              <input
-                type='text'
-                value={workflow.name}
-                onChange={(e) => {
-                  setWorkflow({ ...workflow, name: e.target.value });
-                  triggerSave();
-                }}
-                className='text-2xl font-bold text-dark w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple focus:border-transparent transition-all'
-                style={{ fontFamily: 'var(--font-headers)' }}
-                placeholder='Workflow title...'
-              />
-              <textarea
-                value={workflow.description}
-                onChange={(e) => {
-                  setWorkflow({ ...workflow, description: e.target.value });
-                  triggerSave();
-                  // Auto-resize
-                  e.target.style.height = 'auto';
-                  e.target.style.height = e.target.scrollHeight + 'px';
-                }}
-                className='text-gray-600 w-full mt-3 px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple focus:border-transparent transition-all resize-none overflow-hidden'
-                placeholder='Workflow description...'
-                rows={2}
-              />
-            </div>
-            <div className='flex items-center gap-4 ml-4'>
-              <AutosaveIndicator status={status} lastSaved={lastSaved} />
-              <button
-                onClick={saveWorkflow}
-                disabled={status === 'saving'}
-                className='bg-purple text-white px-4 py-2 rounded-lg hover:opacity-90 disabled:opacity-50 transition-all font-medium'
-                style={{ fontFamily: 'var(--font-headers)' }}
-              >
-                {status === 'saving' ? 'Saving...' : 'Save'}
-              </button>
-              <button
-                onClick={exportWorkflow}
-                className='bg-blue text-white px-4 py-2 rounded-lg hover:opacity-90 transition-all font-medium'
-                style={{ fontFamily: 'var(--font-headers)' }}
-              >
-                Export
-              </button>
-              <button
-                onClick={() => router.push('/')}
-                className='bg-gray-200 text-dark px-4 py-2 rounded-lg hover:bg-gray-300 transition-all font-medium'
-                style={{ fontFamily: 'var(--font-headers)' }}
-              >
-                Back to Home
-              </button>
-            </div>
+        {/* Controls Line - Export, Save, Save Status */}
+        <div className='flex justify-between items-center mb-4'>
+          <div className='flex items-center gap-4'>
+            <button
+              onClick={exportWorkflow}
+              className='bg-blue text-white px-4 py-2 rounded-lg hover:opacity-90 transition-all font-medium'
+              style={{ fontFamily: 'var(--font-headers)' }}
+            >
+              Export
+            </button>
+            <button
+              onClick={saveWorkflow}
+              disabled={status === 'saving'}
+              className='bg-purple text-white px-4 py-2 rounded-lg hover:opacity-90 disabled:opacity-50 transition-all font-medium'
+              style={{ fontFamily: 'var(--font-headers)' }}
+            >
+              {status === 'saving' ? 'Saving...' : 'Save'}
+            </button>
           </div>
-          <div className='text-sm text-gray-500'>
-            Created by: {workflow.createdBy} • Created:{' '}
-            {new Date(workflow.createdAt).toLocaleDateString()} • Updated:{' '}
-            {new Date(workflow.updatedAt).toLocaleDateString()}
+          <AutosaveIndicator status={status} lastSaved={lastSaved} />
+        </div>
+
+        {/* Workflow Details Card */}
+        <div className='bg-white rounded-xl shadow-lg p-6 mb-8 border border-gray-100'>
+          {/* Created/Updated Info */}
+          <div className='text-sm text-gray-500 mb-4 space-y-1'>
+            <div>Created: {formatDate(workflow.createdAt)}</div>
+            <div>Updated: {formatDate(workflow.updatedAt)}</div>
+          </div>
+
+          {/* Title Input */}
+          <div className='mb-4'>
+            <input
+              type='text'
+              value={workflow.name}
+              onChange={(e) => {
+                setWorkflow({ ...workflow, name: e.target.value });
+                triggerSave();
+              }}
+              className='text-2xl font-bold text-dark w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple focus:border-transparent transition-all'
+              style={{ fontFamily: 'var(--font-headers)' }}
+              placeholder='Workflow title...'
+            />
+          </div>
+
+          {/* Description Input */}
+          <div>
+            <textarea
+              value={workflow.description}
+              onChange={(e) => {
+                setWorkflow({ ...workflow, description: e.target.value });
+                triggerSave();
+                // Auto-resize
+                e.target.style.height = 'auto';
+                e.target.style.height = e.target.scrollHeight + 'px';
+              }}
+              className='text-gray-600 w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple focus:border-transparent transition-all resize-none overflow-hidden'
+              placeholder='Workflow description...'
+              rows={2}
+            />
           </div>
         </div>
 
