@@ -330,7 +330,9 @@ export default function Home() {
                       </p>
                       <div className='flex items-center justify-between text-xs text-gray-500 mt-auto'>
                         <span>{workflow.stages.length} stages</span>
-                        <span className='text-purple font-medium'>View Details →</span>
+                        <span className='text-purple font-medium'>
+                          View Details →
+                        </span>
                       </div>
                     </Link>
                   );
@@ -394,7 +396,6 @@ export default function Home() {
             ))}
           </div>
         )}
-
       </div>
     </div>
   );

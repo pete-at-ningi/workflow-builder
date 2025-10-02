@@ -22,7 +22,8 @@ export default function ExampleWorkflowViewer() {
   const fetchExampleWorkflow = async (id: string) => {
     try {
       const workflowMap: Record<string, string> = {
-        'new-financial-planning-client': '/example-workflows/new-financial-planning-client.json',
+        'new-financial-planning-client':
+          '/example-workflows/new-financial-planning-client.json',
         'annual-review': '/example-workflows/annual-review.json',
         'letter-of-authority': '/example-workflows/letter-of-authority.json',
       };

@@ -6,8 +6,6 @@ export const metadata: Metadata = {
   description: 'Create and manage workflows with stages and tasks',
   icons: {
     icon: '/favicon.ico',
-    shortcut: '/favicon.ico',
-    apple: '/icondarksquare.png',
   },
 };
 
@@ -19,9 +17,7 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <head>
-        <link rel='icon' href='/favicon.ico' sizes='any' />
-        <link rel='icon' href='/icondarksquare.png' type='image/png' />
-        <link rel='apple-touch-icon' href='/icondarksquare.png' />
+        <link rel='icon' href='/favicon.ico' />
       </head>
       <body className='antialiased'>{children}</body>
     </html>
