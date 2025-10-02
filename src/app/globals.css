@@ -1,13 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Rethink+Sans:wght@400;500;600&display=swap');
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
-  --background: #EDEDF3;
-  --foreground: #27293B;
+  --background: #ededf3;
+  --foreground: #27293b;
   --purple: #d324dd;
-  --blue: #4396B6;
-  --dark: #27293B;
+  --blue: #4396b6;
+  --dark: #27293b;
   --white: #ffffff;
   --gray: #292929;
 }
@@ -21,7 +21,8 @@
   --color-white: var(--white);
   --color-gray: var(--gray);
   --font-headers: 'Urbanist', 'Urbanist Medium', sans-serif;
-  --font-primary: 'Rethink Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-primary: 'Rethink Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, sans-serif;
 }
 
 body {

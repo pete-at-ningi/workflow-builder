@@ -19,13 +19,14 @@ import {
 } from '@dnd-kit/sortable';
 import { Workflow, Stage, Task } from '@/types/workflow';
 import StageComponent from '@/components/StageComponent';
+import AutosaveIndicator from '@/components/AutosaveIndicator';
+import { useAutosave } from '@/hooks/useAutosave';
 
 export default function WorkflowEditor() {
   const params = useParams();
   const router = useRouter();
   const [workflow, setWorkflow] = useState<Workflow | null>(null);
   const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
   const [showAddStage, setShowAddStage] = useState(false);
   const [newStage, setNewStage] = useState({
     name: '',
@@ -67,7 +68,6 @@ export default function WorkflowEditor() {
   const saveWorkflow = async () => {
     if (!workflow) return;
 
-    setSaving(true);
     try {
       const response = await fetch(`/api/workflows/${workflow.id}`, {
         method: 'PUT',
@@ -80,13 +80,21 @@ export default function WorkflowEditor() {
       if (response.ok) {
         const updatedWorkflow = await response.json();
         setWorkflow(updatedWorkflow);
+      } else {
+        throw new Error('Failed to save workflow');
       }
     } catch (error) {
       console.error('Error saving workflow:', error);
-    } finally {
-      setSaving(false);
+      throw error;
     }
   };
+
+  // Autosave hook
+  const { status, lastSaved, triggerSave } = useAutosave({
+    onSave: saveWorkflow,
+    delay: 2000,
+    enabled: !!workflow,
+  });
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
@@ -107,10 +115,11 @@ export default function WorkflowEditor() {
 
       if (oldIndex !== newIndex) {
         const newStages = arrayMove(workflow.stages, oldIndex, newIndex);
-        setWorkflow({
-          ...workflow,
-          stages: newStages.map((stage, index) => ({ ...stage, order: index })),
-        });
+            setWorkflow({
+              ...workflow,
+              stages: newStages.map((stage, index) => ({ ...stage, order: index })),
+            });
+            triggerSave();
       }
     }
     // Check if we're dragging tasks within a stage
@@ -135,6 +144,7 @@ export default function WorkflowEditor() {
             const newStages = [...workflow.stages];
             newStages[stageIndex] = { ...stage, tasks: newTasks };
             setWorkflow({ ...workflow, stages: newStages });
+            triggerSave();
           }
         }
       } else {
@@ -170,6 +180,7 @@ export default function WorkflowEditor() {
             };
 
             setWorkflow({ ...workflow, stages: newStages });
+            triggerSave();
           }
         }
       }
@@ -192,6 +203,7 @@ export default function WorkflowEditor() {
       ...workflow,
       stages: [...workflow.stages, stage],
     });
+    triggerSave();
 
     setNewStage({
       name: '',
@@ -209,6 +221,7 @@ export default function WorkflowEditor() {
     );
 
     setWorkflow({ ...workflow, stages: newStages });
+    triggerSave();
   };
 
   const deleteStage = (stageId: string) => {
@@ -219,6 +232,7 @@ export default function WorkflowEditor() {
       .map((stage, index) => ({ ...stage, order: index }));
 
     setWorkflow({ ...workflow, stages: newStages });
+    triggerSave();
   };
 
   const addTask = (stageId: string) => {
@@ -236,6 +250,7 @@ export default function WorkflowEditor() {
     );
 
     setWorkflow({ ...workflow, stages: newStages });
+    triggerSave();
   };
 
   const updateTask = (taskId: string, updates: Partial<Task>) => {
@@ -249,6 +264,7 @@ export default function WorkflowEditor() {
     }));
 
     setWorkflow({ ...workflow, stages: newStages });
+    triggerSave();
   };
 
   const deleteTask = (taskId: string) => {
@@ -260,6 +276,7 @@ export default function WorkflowEditor() {
     }));
 
     setWorkflow({ ...workflow, stages: newStages });
+    triggerSave();
   };
 
   const exportWorkflow = async () => {
@@ -336,29 +353,32 @@ export default function WorkflowEditor() {
               <input
                 type='text'
                 value={workflow.name}
-                onChange={(e) =>
-                  setWorkflow({ ...workflow, name: e.target.value })
-                }
+                onChange={(e) => {
+                  setWorkflow({ ...workflow, name: e.target.value });
+                  triggerSave();
+                }}
                 className='text-2xl font-bold text-dark bg-transparent border-none outline-none w-full'
                 style={{ fontFamily: 'var(--font-headers)' }}
               />
               <textarea
                 value={workflow.description}
-                onChange={(e) =>
-                  setWorkflow({ ...workflow, description: e.target.value })
-                }
+                onChange={(e) => {
+                  setWorkflow({ ...workflow, description: e.target.value });
+                  triggerSave();
+                }}
                 className='text-gray-600 bg-transparent border-none outline-none w-full mt-2 resize-none'
                 rows={2}
               />
             </div>
-            <div className='flex gap-3 ml-4'>
+            <div className='flex items-center gap-4 ml-4'>
+              <AutosaveIndicator status={status} lastSaved={lastSaved} />
               <button
                 onClick={saveWorkflow}
-                disabled={saving}
+                disabled={status === 'saving'}
                 className='bg-purple text-white px-4 py-2 rounded-lg hover:opacity-90 disabled:opacity-50 transition-all font-medium'
                 style={{ fontFamily: 'var(--font-headers)' }}
               >
-                {saving ? 'Saving...' : 'Save'}
+                {status === 'saving' ? 'Saving...' : 'Save'}
               </button>
               <button
                 onClick={exportWorkflow}
@@ -367,7 +387,10 @@ export default function WorkflowEditor() {
               >
                 Export
               </button>
-              <label className='bg-gray-200 text-dark px-4 py-2 rounded-lg hover:bg-gray-300 transition-all cursor-pointer font-medium' style={{ fontFamily: 'var(--font-headers)' }}>
+              <label
+                className='bg-gray-200 text-dark px-4 py-2 rounded-lg hover:bg-gray-300 transition-all cursor-pointer font-medium'
+                style={{ fontFamily: 'var(--font-headers)' }}
+              >
                 Import
                 <input
                   type='file'
@@ -421,10 +444,18 @@ export default function WorkflowEditor() {
         {/* Add Stage Button */}
         {showAddStage ? (
           <div className='bg-white rounded-xl shadow-lg p-6 mt-6 border border-gray-100'>
-            <h3 className='text-lg font-semibold mb-4 text-dark' style={{ fontFamily: 'var(--font-headers)' }}>Add New Stage</h3>
+            <h3
+              className='text-lg font-semibold mb-4 text-dark'
+              style={{ fontFamily: 'var(--font-headers)' }}
+            >
+              Add New Stage
+            </h3>
             <div className='space-y-4'>
               <div>
-                <label className='block text-sm font-medium text-dark mb-2' style={{ fontFamily: 'var(--font-headers)' }}>
+                <label
+                  className='block text-sm font-medium text-dark mb-2'
+                  style={{ fontFamily: 'var(--font-headers)' }}
+                >
                   Stage Name
                 </label>
                 <input
@@ -438,7 +469,10 @@ export default function WorkflowEditor() {
                 />
               </div>
               <div>
-                <label className='block text-sm font-medium text-dark mb-2' style={{ fontFamily: 'var(--font-headers)' }}>
+                <label
+                  className='block text-sm font-medium text-dark mb-2'
+                  style={{ fontFamily: 'var(--font-headers)' }}
+                >
                   Description
                 </label>
                 <textarea
@@ -452,7 +486,10 @@ export default function WorkflowEditor() {
                 />
               </div>
               <div>
-                <label className='block text-sm font-medium text-dark mb-2' style={{ fontFamily: 'var(--font-headers)' }}>
+                <label
+                  className='block text-sm font-medium text-dark mb-2'
+                  style={{ fontFamily: 'var(--font-headers)' }}
+                >
                   Outcomes (comma-separated)
                 </label>
                 <input

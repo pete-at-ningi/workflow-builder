@@ -70,13 +70,13 @@ export default function StageComponent({
             >
               ⋮⋮
             </div>
-              <input
-                type='text'
-                value={stage.name}
-                onChange={(e) => onUpdate({ name: e.target.value })}
-                className='text-xl font-semibold text-dark bg-transparent border-none outline-none flex-1'
-                style={{ fontFamily: 'var(--font-headers)' }}
-              />
+            <input
+              type='text'
+              value={stage.name}
+              onChange={(e) => onUpdate({ name: e.target.value })}
+              className='text-xl font-semibold text-dark bg-transparent border-none outline-none flex-1'
+              style={{ fontFamily: 'var(--font-headers)' }}
+            />
           </div>
           <textarea
             value={stage.description}
@@ -114,7 +114,10 @@ export default function StageComponent({
       {/* Outcomes Section */}
       {showOutcomes && (
         <div className='mb-4 p-4 bg-gray-50 rounded-lg'>
-          <h4 className='text-sm font-medium text-dark mb-2' style={{ fontFamily: 'var(--font-headers)' }}>
+          <h4
+            className='text-sm font-medium text-dark mb-2'
+            style={{ fontFamily: 'var(--font-headers)' }}
+          >
             Stage Outcomes
           </h4>
           <div className='flex flex-wrap gap-2 mb-3'>
