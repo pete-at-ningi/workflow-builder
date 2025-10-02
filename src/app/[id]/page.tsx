@@ -98,7 +98,8 @@ export default function WorkflowEditor() {
 
           // Prefer client stages if client already has them (optimistic add/reorder)
           const mergedStages =
-            clientHasStages && (!serverHasStages || server.stages.length < current.stages.length)
+            clientHasStages &&
+            (!serverHasStages || server.stages.length < current.stages.length)
               ? current.stages
               : server.stages ?? current.stages;
 

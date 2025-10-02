@@ -71,17 +71,11 @@ export default function StageComponent({
           </div>
           <button
             onClick={() => setShowOutcomes(!showOutcomes)}
-            className='bg-blue/10 text-blue px-3 py-1 rounded-lg text-sm hover:bg-blue/20 hover:scale-105 transition-all duration-200 font-medium cursor-pointer'
+            className='bg-blue/10 text-blue px-3 py-1 rounded-lg text-sm hover:bg-blue/20 hover:scale-105 transition-all duration-200 font-medium cursor-pointer flex items-center gap-1'
             style={{ fontFamily: 'var(--font-headers)' }}
           >
             {stage.outcomes.length} Outcomes
-          </button>
-          <button
-            onClick={onAddTask}
-            className='bg-purple/10 text-purple px-3 py-1 rounded-lg text-sm hover:bg-purple/20 hover:scale-105 transition-all duration-200 font-medium cursor-pointer'
-            style={{ fontFamily: 'var(--font-headers)' }}
-          >
-            + Task
+            <span className='text-xs'>✏️</span>
           </button>
         </div>
         <button
@@ -171,7 +165,7 @@ export default function StageComponent({
       <div className='space-y-3'>
         {stage.tasks.length === 0 ? (
           <div className='text-center py-8 text-gray-500'>
-            <p>No tasks yet. Click &quot;+ Task&quot; to add one.</p>
+            <p>No tasks yet. Click &quot;+ Task&quot; below to add one.</p>
           </div>
         ) : (
           stage.tasks.map((task) => (
@@ -183,6 +177,17 @@ export default function StageComponent({
             />
           ))
         )}
+      </div>
+
+      {/* Add Task Button */}
+      <div className='mt-4 pt-4 border-t border-gray-100'>
+        <button
+          onClick={onAddTask}
+          className='w-full bg-white border-2 border-dashed border-gray-300 rounded-lg p-4 text-gray-500 hover:border-purple hover:text-purple hover:scale-105 transition-all duration-200 font-medium cursor-pointer'
+          style={{ fontFamily: 'var(--font-headers)' }}
+        >
+          + Add Task
+        </button>
       </div>
     </div>
   );

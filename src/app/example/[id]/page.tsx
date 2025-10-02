@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { Workflow } from '@/types/workflow';
+import { Workflow, Stage, Task } from '@/types/workflow';
 import Image from 'next/image';
 
 export default function ExampleWorkflowViewer() {
@@ -11,6 +11,7 @@ export default function ExampleWorkflowViewer() {
   const [workflow, setWorkflow] = useState<Workflow | null>(null);
   const [loading, setLoading] = useState(true);
   const [expandedStages, setExpandedStages] = useState<Set<string>>(new Set());
+  const [duplicating, setDuplicating] = useState(false);
 
   useEffect(() => {
     if (params.id) {
@@ -82,6 +83,54 @@ export default function ExampleWorkflowViewer() {
     }
   };
 
+  const handleDuplicateWorkflow = async () => {
+    if (!workflow) return;
+    
+    setDuplicating(true);
+    try {
+      // Create a duplicate with new ID and updated metadata
+      const duplicatedWorkflow = {
+        ...workflow,
+        id: crypto.randomUUID(),
+        name: `${workflow.name} (Copy)`,
+        createdBy: 'User',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        // Update stage and task IDs to avoid conflicts
+        stages: workflow.stages.map((stage: Stage) => ({
+          ...stage,
+          id: `stage-${crypto.randomUUID()}`,
+          tasks: stage.tasks.map((task: Task) => ({
+            ...task,
+            id: `task-${crypto.randomUUID()}`,
+          })),
+        })),
+      };
+
+      // Save the duplicated workflow
+      const saveResponse = await fetch('/api/workflows', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(duplicatedWorkflow),
+      });
+
+      if (saveResponse.ok) {
+        const newWorkflow = await saveResponse.json();
+        // Navigate to the duplicated workflow
+        window.location.href = `/${newWorkflow.id}`;
+      } else {
+        throw new Error('Failed to save duplicated workflow');
+      }
+    } catch (error) {
+      console.error('Error duplicating workflow:', error);
+      alert('Failed to duplicate workflow. Please try again.');
+    } finally {
+      setDuplicating(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className='min-h-screen flex items-center justify-center'>
@@ -132,13 +181,23 @@ export default function ExampleWorkflowViewer() {
                 </div>
               </div>
             </div>
-            <button
-              onClick={() => router.push('/')}
-              className='bg-gray-200 text-dark px-4 py-2 rounded-lg hover:bg-gray-300 hover:scale-105 transition-all duration-200 font-medium cursor-pointer'
-              style={{ fontFamily: 'var(--font-headers)' }}
-            >
-              Back to Home
-            </button>
+            <div className='flex gap-3'>
+              <button
+                onClick={handleDuplicateWorkflow}
+                disabled={duplicating}
+                className='bg-green-100 text-green-600 px-4 py-2 rounded-lg hover:bg-green-200 hover:scale-105 transition-all duration-200 font-medium cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100'
+                style={{ fontFamily: 'var(--font-headers)' }}
+              >
+                {duplicating ? 'Duplicating...' : '📋 Duplicate'}
+              </button>
+              <button
+                onClick={() => router.push('/')}
+                className='bg-gray-200 text-dark px-4 py-2 rounded-lg hover:bg-gray-300 hover:scale-105 transition-all duration-200 font-medium cursor-pointer'
+                style={{ fontFamily: 'var(--font-headers)' }}
+              >
+                Back to Home
+              </button>
+            </div>
           </div>
         </div>
 
@@ -173,16 +232,8 @@ export default function ExampleWorkflowViewer() {
                     <span className='text-sm text-gray-500'>
                       {stage.tasks.length} tasks
                     </span>
-                    <div className='flex gap-1 flex-wrap'>
-                      {stage.outcomes.map((outcome) => (
-                        <span
-                          key={outcome}
-                          className='bg-purple/10 text-purple px-2 py-1 rounded text-xs font-medium'
-                          style={{ fontFamily: 'var(--font-headers)' }}
-                        >
-                          {outcome}
-                        </span>
-                      ))}
+                    <div className='text-sm text-gray-500'>
+                      {stage.outcomes.length} outcomes
                     </div>
                   </div>
                 </div>
@@ -192,36 +243,70 @@ export default function ExampleWorkflowViewer() {
               {expandedStages.has(stage.id) && (
                 <div className='px-6 pb-6 border-t border-gray-200'>
                   <div className='pt-6 space-y-4'>
-                    {stage.tasks.map((task) => (
-                      <div
-                        key={task.id}
-                        className='bg-gray-50 rounded-lg p-4 border border-gray-200'
-                      >
-                        <div className='flex justify-between items-start'>
-                          <div className='flex-1'>
-                            <h4
-                              className='font-medium text-dark mb-1'
+                    {/* Outcomes Section */}
+                    {stage.outcomes.length > 0 && (
+                      <div className='bg-gray-50 rounded-lg p-4 border border-gray-200'>
+                        <h4
+                          className='text-sm font-medium text-dark mb-3'
+                          style={{ fontFamily: 'var(--font-headers)' }}
+                        >
+                          Stage Outcomes
+                        </h4>
+                        <div className='space-y-2'>
+                          {stage.outcomes.map((outcome, index) => (
+                            <div
+                              key={index}
+                              className='bg-purple/10 text-purple px-3 py-2 rounded text-sm font-medium'
                               style={{ fontFamily: 'var(--font-headers)' }}
                             >
-                              {task.title}
-                            </h4>
-                            {task.description && (
-                              <p className='text-sm text-gray-600'>
-                                {task.description}
-                              </p>
-                            )}
-                          </div>
-                          <span
-                            className={`px-3 py-1 rounded-full text-xs font-medium ${getAssigneeColor(
-                              task.assignedTo
-                            )}`}
-                            style={{ fontFamily: 'var(--font-headers)' }}
-                          >
-                            {task.assignedTo}
-                          </span>
+                              {outcome}
+                            </div>
+                          ))}
                         </div>
                       </div>
-                    ))}
+                    )}
+
+                    {/* Tasks Section */}
+                    <div>
+                      <h4
+                        className='text-sm font-medium text-dark mb-3'
+                        style={{ fontFamily: 'var(--font-headers)' }}
+                      >
+                        Tasks
+                      </h4>
+                      <div className='space-y-3'>
+                        {stage.tasks.map((task) => (
+                          <div
+                            key={task.id}
+                            className='bg-white rounded-lg p-4 border border-gray-200'
+                          >
+                            <div className='flex justify-between items-start'>
+                              <div className='flex-1'>
+                                <h5
+                                  className='font-medium text-dark mb-1'
+                                  style={{ fontFamily: 'var(--font-headers)' }}
+                                >
+                                  {task.title}
+                                </h5>
+                                {task.description && (
+                                  <p className='text-sm text-gray-600'>
+                                    {task.description}
+                                  </p>
+                                )}
+                              </div>
+                              <span
+                                className={`px-3 py-1 rounded-full text-xs font-medium ${getAssigneeColor(
+                                  task.assignedTo
+                                )}`}
+                                style={{ fontFamily: 'var(--font-headers)' }}
+                              >
+                                {task.assignedTo}
+                              </span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </div>
               )}
