@@ -1,7 +1,5 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-
 type AutosaveStatus = 'idle' | 'saving' | 'saved' | 'error';
 
 interface AutosaveIndicatorProps {
@@ -9,8 +7,10 @@ interface AutosaveIndicatorProps {
   lastSaved?: Date | null;
 }
 
-export default function AutosaveIndicator({ status, lastSaved }: AutosaveIndicatorProps) {
-
+export default function AutosaveIndicator({
+  status,
+  lastSaved,
+}: AutosaveIndicatorProps) {
   const getStatusConfig = () => {
     switch (status) {
       case 'saving':
@@ -43,11 +43,13 @@ export default function AutosaveIndicator({ status, lastSaved }: AutosaveIndicat
   const config = getStatusConfig();
 
   return (
-    <div className={`flex items-center gap-2 text-sm font-medium ${config.className}`}>
-      <span className="text-xs">{config.icon}</span>
+    <div
+      className={`flex items-center gap-2 text-sm font-medium ${config.className}`}
+    >
+      <span className='text-xs'>{config.icon}</span>
       <span>{config.text}</span>
       {lastSaved && status === 'idle' && (
-        <span className="text-xs text-gray-400 ml-1">
+        <span className='text-xs text-gray-400 ml-1'>
           {lastSaved.toLocaleTimeString()}
         </span>
       )}

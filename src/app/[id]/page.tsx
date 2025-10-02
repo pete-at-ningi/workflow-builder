@@ -115,11 +115,11 @@ export default function WorkflowEditor() {
 
       if (oldIndex !== newIndex) {
         const newStages = arrayMove(workflow.stages, oldIndex, newIndex);
-            setWorkflow({
-              ...workflow,
-              stages: newStages.map((stage, index) => ({ ...stage, order: index })),
-            });
-            triggerSave();
+        setWorkflow({
+          ...workflow,
+          stages: newStages.map((stage, index) => ({ ...stage, order: index })),
+        });
+        triggerSave();
       }
     }
     // Check if we're dragging tasks within a stage
@@ -302,30 +302,6 @@ export default function WorkflowEditor() {
     }
   };
 
-  const importWorkflow = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    try {
-      const text = await file.text();
-      const importedWorkflow = JSON.parse(text);
-
-      const response = await fetch('/api/workflows/import', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(importedWorkflow),
-      });
-
-      if (response.ok) {
-        const newWorkflow = await response.json();
-        router.push(`/${newWorkflow.id}`);
-      }
-    } catch (error) {
-      console.error('Error importing workflow:', error);
-    }
-  };
 
   if (loading) {
     return (
@@ -387,18 +363,6 @@ export default function WorkflowEditor() {
               >
                 Export
               </button>
-              <label
-                className='bg-gray-200 text-dark px-4 py-2 rounded-lg hover:bg-gray-300 transition-all cursor-pointer font-medium'
-                style={{ fontFamily: 'var(--font-headers)' }}
-              >
-                Import
-                <input
-                  type='file'
-                  accept='.json'
-                  onChange={importWorkflow}
-                  className='hidden'
-                />
-              </label>
               <button
                 onClick={() => router.push('/')}
                 className='bg-gray-200 text-dark px-4 py-2 rounded-lg hover:bg-gray-300 transition-all font-medium'

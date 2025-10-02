@@ -14,6 +14,7 @@ export default function Home() {
     description: '',
     createdBy: '',
   });
+  const [importing, setImporting] = useState(false);
 
   useEffect(() => {
     fetchWorkflows();
@@ -61,6 +62,41 @@ export default function Home() {
     });
   };
 
+  const handleImportWorkflow = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    setImporting(true);
+    try {
+      const text = await file.text();
+      const importedWorkflow = JSON.parse(text);
+      
+      const response = await fetch('/api/workflows/import', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(importedWorkflow),
+      });
+
+      if (response.ok) {
+        const newWorkflow = await response.json();
+        setWorkflows([...workflows, newWorkflow]);
+        // Navigate to the imported workflow
+        window.location.href = `/${newWorkflow.id}`;
+      } else {
+        throw new Error('Failed to import workflow');
+      }
+    } catch (error) {
+      console.error('Error importing workflow:', error);
+      alert('Failed to import workflow. Please check the file format.');
+    } finally {
+      setImporting(false);
+      // Reset the file input
+      event.target.value = '';
+    }
+  };
+
   if (loading) {
     return (
       <div className='min-h-screen flex items-center justify-center'>
@@ -88,13 +124,25 @@ export default function Home() {
               Workflow Builder
             </h1>
           </div>
-          <button
-            onClick={() => setShowCreateForm(!showCreateForm)}
-            className='bg-purple text-white px-6 py-3 rounded-lg hover:opacity-90 transition-all font-medium'
-            style={{ fontFamily: 'var(--font-headers)' }}
-          >
-            {showCreateForm ? 'Cancel' : 'Create New Workflow'}
-          </button>
+          <div className='flex gap-3'>
+            <label className='bg-blue text-white px-6 py-3 rounded-lg hover:opacity-90 transition-all font-medium cursor-pointer' style={{ fontFamily: 'var(--font-headers)' }}>
+              {importing ? 'Importing...' : 'Import Workflow'}
+              <input
+                type='file'
+                accept='.json'
+                onChange={handleImportWorkflow}
+                className='hidden'
+                disabled={importing}
+              />
+            </label>
+            <button
+              onClick={() => setShowCreateForm(!showCreateForm)}
+              className='bg-purple text-white px-6 py-3 rounded-lg hover:opacity-90 transition-all font-medium'
+              style={{ fontFamily: 'var(--font-headers)' }}
+            >
+              {showCreateForm ? 'Cancel' : 'Create New Workflow'}
+            </button>
+          </div>
         </div>
 
         {showCreateForm && (

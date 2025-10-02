@@ -10,7 +10,11 @@ interface UseAutosaveOptions {
   enabled?: boolean;
 }
 
-export function useAutosave({ delay = 2000, onSave, enabled = true }: UseAutosaveOptions) {
+export function useAutosave({
+  delay = 2000,
+  onSave,
+  enabled = true,
+}: UseAutosaveOptions) {
   const [status, setStatus] = useState<AutosaveStatus>('idle');
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
